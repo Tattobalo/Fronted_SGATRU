@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuevo Activo - SGATRU</title>
+<link rel="stylesheet" href="../CSS/nuevoActivo.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>Registrar Nuevo Activo</h1>
+        <p>Alta de equipos dentro de la infraestructura universitaria</p>
+    </div>
+
+    <form>
+
+        <div class="section">
+            <h2>Información General</h2>
+
+            <div class="grid">
+
+                <div class="campo">
+                    <label>Nombre del Equipo</label>
+                    <input type="text" placeholder="PC-01">
+                </div>
+
+                <div class="campo">
+                    <label>Tipo de Activo</label>
+                    <select>
+                        <option>Computadora</option>
+                        <option>Switch</option>
+                        <option>Access Point</option>
+                        <option>Servidor</option>
+                        <option>Impresora</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label>Marca</label>
+                    <input type="text" placeholder="Dell">
+                </div>
+
+                <div class="campo">
+                    <label>Modelo</label>
+                    <input type="text" placeholder="Optiplex">
+                </div>
+
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Datos de Red</h2>
+
+            <div class="grid">
+
+                <div class="campo">
+                    <label>Dirección IP</label>
+                    <input type="text" placeholder="192.168.1.10">
+                </div>
+
+                <div class="campo">
+                    <label>MAC Address</label>
+                    <input type="text" placeholder="AA:BB:CC:DD:EE:FF">
+                </div>
+
+                <div class="campo">
+                    <label>Hostname</label>
+                    <input type="text" placeholder="PC-LAB01-01">
+                </div>
+
+                <div class="campo">
+                    <label>Switch</label>
+                    <select>
+                        <option>SW-EDA-01</option>
+                        <option>SW-EDA-02</option>
+                        <option>SW-BIB-01</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Ubicación Física</h2>
+
+            <div class="grid">
+
+                <div class="campo">
+                    <label>Edificio</label>
+                    <select>
+                        <option>Edificio A</option>
+                        <option>Edificio B</option>
+                        <option>Biblioteca</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label>Piso</label>
+                    <select>
+                        <option>Piso 1</option>
+                        <option>Piso 2</option>
+                        <option>Piso 3</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label>Aula</label>
+                    <select>
+                        <option>Laboratorio 1</option>
+                        <option>Laboratorio 2</option>
+                        <option>Aula 101</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label>Responsable</label>
+                    <select>
+                        <option>Juan Pérez</option>
+                        <option>María López</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Hardware</h2>
+
+            <div class="grid">
+
+                <div class="campo">
+                    <label>Procesador</label>
+                    <input type="text" placeholder="Intel Core i5">
+                </div>
+
+                <div class="campo">
+                    <label>RAM</label>
+                    <input type="text" placeholder="16 GB">
+                </div>
+
+                <div class="campo">
+                    <label>Disco</label>
+                    <input type="text" placeholder="512 SSD">
+                </div>
+
+                <div class="campo">
+                    <label>Sistema Operativo</label>
+                    <input type="text" placeholder="Windows 11">
+                </div>
+
+            </div>
+        </div>
+
+        <div class="acciones">
+            <div class="actions">
+                
+            <button type="button" class="cancelar" onclick="window.location.href='inventario.html'">Cancelar</button>
+            <button type="submit" class="guardar">Guardar Activo</button>
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>

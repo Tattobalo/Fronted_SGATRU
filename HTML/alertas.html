@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alertas - SGATRU</title>
+  <link rel="stylesheet" href="../CSS/alertas.css">
+</head>
+<body>
+
+  <aside class="sidebar">
+    <img src="../IMG/logo-uaemex.png" class="logo" alt="UAEMex">
+    <h2>SGATRU</h2>
+
+    <nav>
+      <a href="home.html">Dashboard</a>
+      <a href="campus.html">Campus</a>
+      <a href="edificio.html">Edificios</a>
+      <a href="piso.html">Piso</a>
+      <a href="aula.html">Aula/Laboratorio</a>
+      <a href="equipo.html">Equipo</a>
+      <a href="inventario.html">Inventario</a>
+      <a class="active" href="#">Alertas</a>
+      <a href="#">Reportes</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+
+    <header class="topbar">
+      <div>
+        <h1>Alertas de Red</h1>
+        <p>Monitoreo de fallas, desconexiones, intermitencias y riesgos detectados</p>
+      </div>
+
+      <button class="scan-btn">Ejecutar escaneo</button>
+    </header>
+
+    <section class="alerts-summary">
+      <div class="summary-card">
+        <h3>Críticas</h3>
+        <p class="red">3</p>
+      </div>
+
+      <div class="summary-card">
+        <h3>Advertencias</h3>
+        <p class="gold">4</p>
+      </div>
+
+      <div class="summary-card">
+        <h3>Resueltas</h3>
+        <p class="green">18</p>
+      </div>
+
+      <div class="summary-card">
+        <h3>Total</h3>
+        <p>25</p>
+      </div>
+    </section>
+
+    <section class="filters">
+      <input type="text" placeholder="Buscar por equipo, IP, ubicación o tipo de alerta...">
+
+      <select>
+        <option>Todas las severidades</option>
+        <option>Crítica</option>
+        <option>Advertencia</option>
+        <option>Informativa</option>
+      </select>
+
+      <select>
+        <option>Todos los estados</option>
+        <option>Activa</option>
+        <option>En revisión</option>
+        <option>Resuelta</option>
+      </select>
+
+      <button>Filtrar</button>
+    </section>
+
+    <section class="alerts-grid">
+
+      <div class="alert-card critical">
+        <div class="alert-header">
+          <h2>Equipo desconectado</h2>
+          <span class="badge critical-badge">Crítica</span>
+        </div>
+
+        <p class="description">
+          El equipo PC-05 no responde a las pruebas de conectividad mediante ping.
+        </p>
+
+        <div class="alert-data">
+          <p><strong>Equipo:</strong> PC-05</p>
+          <p><strong>IP:</strong> 192.168.1.15</p>
+          <p><strong>Ubicación:</strong> Edificio A / Piso 1 / Laboratorio 1</p>
+          <p><strong>Detectada:</strong> 02/06/2026 18:40</p>
+        </div>
+
+        <div class="alert-actions">
+          <a href="equipo.html">Ver equipo</a>
+          <button>Marcar en revisión</button>
+        </div>
+      </div>
+
+      <div class="alert-card warning">
+        <div class="alert-header">
+          <h2>Conectividad intermitente</h2>
+          <span class="badge warning-badge">Advertencia</span>
+        </div>
+
+        <p class="description">
+          El equipo PC-03 presenta respuestas irregulares durante el monitoreo.
+        </p>
+
+        <div class="alert-data">
+          <p><strong>Equipo:</strong> PC-03</p>
+          <p><strong>IP:</strong> 192.168.1.13</p>
+          <p><strong>Ubicación:</strong> Edificio A / Piso 1 / Laboratorio 1</p>
+          <p><strong>Detectada:</strong> 02/06/2026 14:10</p>
+        </div>
+
+        <div class="alert-actions">
+          <a href="equipo.html">Ver equipo</a>
+          <button>Resolver</button>
+        </div>
+      </div>
+
+      <div class="alert-card critical">
+        <div class="alert-header">
+          <h2>IP duplicada detectada</h2>
+          <span class="badge critical-badge">Crítica</span>
+        </div>
+
+        <p class="description">
+          La dirección IP 192.168.1.25 aparece asignada a más de un activo.
+        </p>
+
+        <div class="alert-data">
+          <p><strong>IP:</strong> 192.168.1.25</p>
+          <p><strong>Activos:</strong> PC-08 / PC-12</p>
+          <p><strong>Ubicación:</strong> Edificio B / Piso 2</p>
+          <p><strong>Detectada:</strong> 02/06/2026 17:22</p>
+        </div>
+
+        <div class="alert-actions">
+          <a href="inventario.html">Ver inventario</a>
+          <button>Marcar en revisión</button>
+        </div>
+      </div>
+
+      <div class="alert-card info">
+        <div class="alert-header">
+          <h2>Switch actualizado</h2>
+          <span class="badge info-badge">Informativa</span>
+        </div>
+
+        <p class="description">
+          El switch SW-LAB01 respondió correctamente en el último escaneo.
+        </p>
+
+        <div class="alert-data">
+          <p><strong>Switch:</strong> SW-LAB01</p>
+          <p><strong>Puertos:</strong> 24</p>
+          <p><strong>Ubicación:</strong> Edificio A / Piso 1 / Cuarto de Red</p>
+          <p><strong>Detectada:</strong> 02/06/2026 18:35</p>
+        </div>
+
+        <div class="alert-actions">
+          <a href="equipo.html">Ver switch</a>
+          <button>Archivar</button>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+</body>
+</html>

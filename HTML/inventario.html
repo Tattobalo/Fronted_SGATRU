@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventario de Activos - SGATRU</title>
+  <link rel="stylesheet" href="../CSS/inventario.css">
+</head>
+<body>
+
+  <aside class="sidebar">
+    <img src="../IMG/logo-uaemex.png" class="logo" alt="UAEMex">
+    <h2>SGATRU</h2>
+
+    <nav>
+      <a href="home.html">Dashboard</a>
+      <a href="campus.html">Campus</a>
+      <a href="edificio.html">Edificios</a>
+      <a href="piso.html">Piso</a>
+      <a href="aula.html">Aula/Laboratorio</a>
+      <a href="equipo.html">Equipo</a>
+      <a class="active" href="#">Inventario</a>
+      <a href="alertas.html">Alertas</a>
+      <a href="reportes.html">Reportes</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+
+    <header class="topbar">
+      <div>
+        <h1>Inventario de Activos</h1>
+        <p>Registro general de equipos, red, responsables y ubicación física</p>
+      </div>
+
+      <a href="nuevoActivo.html" class="add-btn">+ Nuevo activo</a>
+    </header>
+
+    <section class="inventory-summary">
+      <div class="summary-card">
+        <h3>Total activos</h3>
+        <p>153</p>
+      </div>
+
+      <div class="summary-card">
+        <h3>Online</h3>
+        <p class="green">128</p>
+      </div>
+
+      <div class="summary-card">
+        <h3>Offline</h3>
+        <p class="red">12</p>
+      </div>
+
+      <div class="summary-card">
+        <h3>Intermitentes</h3>
+        <p class="gold">13</p>
+      </div>
+    </section>
+
+    <section class="filters">
+      <input type="text" placeholder="Buscar por equipo, IP, MAC o responsable...">
+
+      <select>
+        <option>Todos los estados</option>
+        <option>Online</option>
+        <option>Offline</option>
+        <option>Intermitente</option>
+      </select>
+
+      <select>
+        <option>Todos los edificios</option>
+        <option>Edificio A</option>
+        <option>Edificio B</option>
+        <option>Biblioteca</option>
+        <option>Laboratorio</option>
+      </select>
+
+      <button>Filtrar</button>
+    </section>
+
+    <section class="table-section">
+      <div class="table-header">
+        <h2>Listado de Activos</h2>
+        <button class="export-btn">Exportar</button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>Tipo</th>
+            <th>IP</th>
+            <th>MAC</th>
+            <th>Ubicación</th>
+            <th>Responsable</th>
+            <th>Estado</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>PC-01</td>
+            <td>Computadora</td>
+            <td>192.168.1.11</td>
+            <td>AA:BB:CC:11:22:01</td>
+            <td>Edificio A / Piso 1 / Lab 1</td>
+            <td>Ing. Juan Pérez</td>
+            <td><span class="badge online-badge">Online</span></td>
+            <td><a href="equipo.html">Ver</a></td>
+          </tr>
+
+          <tr>
+            <td>PC-03</td>
+            <td>Computadora</td>
+            <td>192.168.1.13</td>
+            <td>AA:BB:CC:11:22:03</td>
+            <td>Edificio A / Piso 1 / Lab 1</td>
+            <td>Lab. Cómputo</td>
+            <td><span class="badge warning-badge">Intermitente</span></td>
+            <td><a href="equipo.html">Ver</a></td>
+          </tr>
+
+          <tr>
+            <td>PC-05</td>
+            <td>Computadora</td>
+            <td>192.168.1.15</td>
+            <td>AA:BB:CC:11:22:05</td>
+            <td>Edificio A / Piso 1 / Lab 1</td>
+            <td>Lab. Cómputo</td>
+            <td><span class="badge offline-badge">Offline</span></td>
+            <td><a href="equipo.html">Ver</a></td>
+          </tr>
+
+          <tr>
+            <td>SW-LAB01</td>
+            <td>Switch</td>
+            <td>192.168.1.2</td>
+            <td>AA:BB:CC:AA:01:01</td>
+            <td>Edificio A / Piso 1 / Cuarto Red</td>
+            <td>Redes TI</td>
+            <td><span class="badge online-badge">Online</span></td>
+            <td><a href="equipo.html">Ver</a></td>
+          </tr>
+
+          <tr>
+            <td>AP-BIB-01</td>
+            <td>Access Point</td>
+            <td>192.168.2.10</td>
+            <td>AA:BB:CC:AP:01:01</td>
+            <td>Biblioteca / Piso 1</td>
+            <td>Redes TI</td>
+            <td><span class="badge online-badge">Online</span></td>
+            <td><a href="equipo.html">Ver</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+</body>
+</html>

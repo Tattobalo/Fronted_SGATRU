@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Topología de Red - SGATRU</title>
+  <link rel="stylesheet" href="../CSS/topologia.css">
+</head>
+<body>
+
+  <aside class="sidebar">
+    <img src="../IMG/logo-uaemex.png" class="logo" alt="UAEMex">
+    <h2>SGATRU</h2>
+
+    <nav>
+      <a href="home.html">Dashboard</a>
+      <a href="campus.html">Campus</a>
+      <a href="edificio.html">Edificios</a>
+      <a class="active" href="#">Topología</a>
+      <a href="inventario.html">Inventario</a>
+      <a href="alertas.html">Alertas</a>
+      <a href="reportes.html">Reportes</a>
+      <a href="usuarios.html">Usuarios</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+
+    <header class="topbar">
+      <div>
+        <h1>Topología de Red</h1>
+        <p>Visualización lógica de switches, puertos, puntos de acceso y activos conectados</p>
+      </div>
+
+      <button class="scan-btn">Actualizar topología</button>
+    </header>
+
+    <section class="topology-summary">
+      <div class="summary-card">
+        <h3>Switches</h3>
+        <p>18</p>
+      </div>
+
+      <div class="summary-card">
+        <h3>Activos</h3>
+        <p class="green">153</p>
+      </div>
+
+      <div class="summary-card">
+        <h3>Puertos ocupados</h3>
+        <p class="gold">86%</p>
+      </div>
+
+      <div class="summary-card">
+        <h3>Alertas</h3>
+        <p class="red">7</p>
+      </div>
+    </section>
+
+    <section class="topology-panel">
+
+      <div class="panel-header">
+        <h2>Mapa lógico de conectividad</h2>
+
+        <div class="legend">
+          <span><b class="dot green-bg"></b> Online</span>
+          <span><b class="dot gold-bg"></b> Intermitente</span>
+          <span><b class="dot red-bg"></b> Offline</span>
+        </div>
+      </div>
+
+      <div class="topology-map">
+
+        <div class="line internet-firewall"></div>
+        <div class="line firewall-core"></div>
+        <div class="line core-a"></div>
+        <div class="line core-b"></div>
+        <div class="line core-bib"></div>
+
+        <div class="node internet">
+          <span>🌐</span>
+          <strong>Internet</strong>
+          <small>Activo</small>
+        </div>
+
+        <div class="node firewall">
+          <span>🛡️</span>
+          <strong>Firewall</strong>
+          <small>FW-CAMPUS</small>
+        </div>
+
+        <div class="node core">
+          <span>🔀</span>
+          <strong>Core Switch</strong>
+          <small>SW-CORE-01</small>
+        </div>
+
+        <div class="node switch-a">
+          <span>🔌</span>
+          <strong>Switch Edificio A</strong>
+          <small>SW-EDA-01</small>
+        </div>
+
+        <div class="node switch-b warning-node">
+          <span>🔌</span>
+          <strong>Switch Edificio B</strong>
+          <small>SW-EDB-01</small>
+        </div>
+
+        <div class="node switch-bib">
+          <span>🔌</span>
+          <strong>Switch Biblioteca</strong>
+          <small>SW-BIB-01</small>
+        </div>
+
+        <div class="device pc-a1 online-device" onclick="window.location.href='equipo.html'">
+          🖥️ PC-01
+        </div>
+
+        <div class="device pc-a2 online-device" onclick="window.location.href='equipo.html'">
+          🖥️ PC-02
+        </div>
+
+        <div class="device ap-a online-device">
+          📶 AP-A01
+        </div>
+
+        <div class="device pc-b1 warning-device" onclick="window.location.href='equipo.html'">
+          🖥️ PC-12
+        </div>
+
+        <div class="device pc-b2 offline-device" onclick="window.location.href='equipo.html'">
+          🖥️ PC-15
+        </div>
+
+        <div class="device ap-b online-device">
+          📶 AP-B01
+        </div>
+
+        <div class="device pc-bib1 online-device" onclick="window.location.href='equipo.html'">
+          🖥️ PC-20
+        </div>
+
+        <div class="device ap-bib online-device">
+          📶 AP-BIB
+        </div>
+
+      </div>
+
+    </section>
+
+    <section class="topology-details">
+
+      <div class="panel">
+        <h2>Conexiones principales</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Origen</th>
+              <th>Destino</th>
+              <th>Puerto</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>SW-CORE-01</td>
+              <td>SW-EDA-01</td>
+              <td>Gi0/1</td>
+              <td><span class="badge online-badge">Online</span></td>
+            </tr>
+
+            <tr>
+              <td>SW-CORE-01</td>
+              <td>SW-EDB-01</td>
+              <td>Gi0/2</td>
+              <td><span class="badge warning-badge">Intermitente</span></td>
+            </tr>
+
+            <tr>
+              <td>SW-EDA-01</td>
+              <td>PC-01</td>
+              <td>Fa0/1</td>
+              <td><span class="badge online-badge">Online</span></td>
+            </tr>
+
+            <tr>
+              <td>SW-EDB-01</td>
+              <td>PC-15</td>
+              <td>Fa0/8</td>
+              <td><span class="badge offline-badge">Offline</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="panel">
+        <h2>Resumen técnico</h2>
+
+        <div class="data-row">
+          <span>Último escaneo</span>
+          <strong>02/06/2026 18:50</strong>
+        </div>
+
+        <div class="data-row">
+          <span>Dispositivos detectados</span>
+          <strong>153</strong>
+        </div>
+
+        <div class="data-row">
+          <span>Puertos libres</span>
+          <strong>34</strong>
+        </div>
+
+        <div class="data-row">
+          <span>IP duplicadas</span>
+          <strong class="red">1</strong>
+        </div>
+
+        <button class="report-btn">Generar reporte de topología</button>
+      </div>
+
+    </section>
+
+  </main>
+
+</body>
+</html>

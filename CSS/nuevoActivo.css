@@ -1,0 +1,93 @@
+body{
+    background:#f4f6f3;
+    font-family:'Segoe UI',sans-serif;
+    margin:0;
+}
+
+.container{
+    width:90%;
+    max-width:1300px;
+    margin:auto;
+    padding:30px;
+}
+
+.header{
+    background:white;
+    padding:25px;
+    border-left:8px solid #d4af37;
+    border-radius:15px;
+    margin-bottom:25px;
+}
+
+.header h1{
+    color:#005b2e;
+}
+
+.section{
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    margin-bottom:25px;
+}
+
+.section h2{
+    color:#005b2e;
+    margin-bottom:20px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+.campo{
+    display:flex;
+    flex-direction:column;
+}
+
+.campo label{
+    margin-bottom:6px;
+    color:#005b2e;
+    font-weight:bold;
+}
+
+.campo input,
+.campo select{
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+}
+
+.acciones{
+    display:flex;
+    justify-content:flex-end;
+    gap:15px;
+}
+
+.cancel{
+background:#e5e7eb;
+padding:12px 20px;
+border-radius:10px;
+text-decoration:none;
+color:#333;
+font-weight:bold;
+display:inline-block;
+}
+
+.cancel:hover{
+background:#d1d5db;
+}
+
+.guardar{
+    background:#005b2e;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:8px;
+}
+
+.guardar:hover{
+    background:#d4af37;
+    color:#005b2e;
+}

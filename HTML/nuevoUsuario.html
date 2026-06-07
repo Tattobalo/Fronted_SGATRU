@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Nuevo Usuario - SGATRU</title>
+  <link rel="stylesheet" href="../CSS/nuevoUsuario.css">
+</head>
+<body>
+
+  <aside class="sidebar">
+    <img src="../IMG/logo-uaemex.png" class="logo" alt="UAEMex">
+    <h2>SGATRU</h2>
+
+    <nav>
+      <a href="home.html">Dashboard</a>
+      <a href="campus.html">Campus</a>
+      <a href="edificio.html">Edificios</a>
+      <a href="topologia.html">Topología</a>
+      <a href="inventario.html">Inventario</a>
+      <a href="alertas.html">Alertas</a>
+      <a href="reportes.html">Reportes</a>
+      <a class="active" href="usuarios.html">Usuarios</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+
+    <header class="topbar">
+      <div>
+        <h1>Nuevo Usuario</h1>
+        <p>Registro de cuenta, rol y permisos de acceso al sistema SGATRU</p>
+      </div>
+
+      <a href="usuarios.html" class="back-btn">← Volver</a>
+    </header>
+
+    <section class="form-section">
+
+      <form class="user-form">
+
+        <h2>Datos personales</h2>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Nombre completo</label>
+            <input type="text" placeholder="Ej. Karen Minigo" required>
+          </div>
+
+          <div class="form-group">
+            <label>Correo institucional</label>
+            <input type="email" placeholder="usuario@uaemex.mx" required>
+          </div>
+
+          <div class="form-group">
+            <label>Teléfono</label>
+            <input type="tel" placeholder="722 000 0000">
+          </div>
+
+          <div class="form-group">
+            <label>Cargo</label>
+            <input type="text" placeholder="Ej. Responsable de laboratorio">
+          </div>
+        </div>
+
+        <h2>Datos de acceso</h2>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Nombre de usuario</label>
+            <input type="text" placeholder="Ej. kminigo" required>
+          </div>
+
+          <div class="form-group">
+            <label>Contraseña temporal</label>
+            <input type="password" placeholder="Contraseña temporal" required>
+          </div>
+
+          <div class="form-group">
+            <label>Confirmar contraseña</label>
+            <input type="password" placeholder="Confirmar contraseña" required>
+          </div>
+
+          <div class="form-group">
+            <label>Estado</label>
+            <select>
+              <option>Activo</option>
+              <option>Inactivo</option>
+            </select>
+          </div>
+        </div>
+
+        <h2>Rol y área asignada</h2>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Rol del usuario</label>
+            <select required>
+              <option value="">Selecciona un rol</option>
+              <option>Administrador de Red</option>
+              <option>Responsable de Área</option>
+              <option>Auxiliar de Inventario</option>
+              <option>Usuario de Consulta</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Edificio asignado</label>
+            <select>
+              <option>Campus completo</option>
+              <option>Edificio A</option>
+              <option>Edificio B</option>
+              <option>Biblioteca</option>
+              <option>Laboratorio</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Piso asignado</label>
+            <select>
+              <option>Todos</option>
+              <option>Piso 1</option>
+              <option>Piso 2</option>
+              <option>Piso 3</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Aula/Laboratorio</label>
+            <select>
+              <option>Todos</option>
+              <option>Laboratorio 1</option>
+              <option>Laboratorio 2</option>
+              <option>Aula 101</option>
+              <option>Cuarto de Red</option>
+            </select>
+          </div>
+        </div>
+
+        <h2>Permisos</h2>
+
+        <div class="permissions-grid">
+
+          <label class="permission-card">
+            <input type="checkbox" checked>
+            <span>Ver dashboard</span>
+          </label>
+
+          <label class="permission-card">
+            <input type="checkbox" checked>
+            <span>Consultar inventario</span>
+          </label>
+
+          <label class="permission-card">
+            <input type="checkbox">
+            <span>Editar activos</span>
+          </label>
+
+          <label class="permission-card">
+            <input type="checkbox">
+            <span>Gestionar usuarios</span>
+          </label>
+
+          <label class="permission-card">
+            <input type="checkbox">
+            <span>Ejecutar escaneos</span>
+          </label>
+
+          <label class="permission-card">
+            <input type="checkbox" checked>
+            <span>Generar reportes</span>
+          </label>
+
+        </div>
+
+        <div class="form-actions">
+          <a href="usuarios.html" class="cancel-btn">Cancelar</a>
+          <button type="submit" class="save-btn">Guardar usuario</button>
+        </div>
+
+      </form>
+
+    </section>
+
+  </main>
+
+</body>
+</html>

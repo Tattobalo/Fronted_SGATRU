@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard SGATRU</title>
+  <link rel="stylesheet" href="../CSS/home.css">
+</head>
+<body>
+
+  <aside class="sidebar">
+    <img src="logo-uaemex.png" class="logo" alt="UAEMex">
+    <h2>SGATRU</h2>
+
+    <nav>
+      <a class="active" href="#">Dashboard</a>
+      <a href="campus.html">Campus</a>
+      <a href="edificio.html">Edificios</a>
+      <a href="inventario.html">Inventario</a>
+      <a href="alertas.html">Alertas</a>
+      <a href="reportes.html">Reportes</a>
+      <a href="usuarios.html">Usuarios</a>
+      
+    </nav>
+  </aside>
+
+  <main class="main-content">
+
+    <header class="topbar">
+      <div>
+        <h1>Dashboard Principal</h1>
+        <p>Monitoreo general de activos y topología de red universitaria</p>
+      </div>
+
+      <div class="user-box">
+        <span>Administrador</span>
+        <button>Cerrar sesión</button>
+      </div>
+    </header>
+
+    <section class="cards">
+
+      <div class="card">
+        <h3>Equipos Online</h3>
+        <p class="number green">128</p>
+        <span>Dispositivos conectados</span>
+      </div>
+
+      <div class="card">
+        <h3>Equipos Offline</h3>
+        <p class="number red">12</p>
+        <span>Dispositivos sin conexión</span>
+      </div>
+
+      <div class="card">
+        <h3>Alertas Activas</h3>
+        <p class="number gold">7</p>
+        <span>Incidencias pendientes</span>
+      </div>
+
+      <div class="card">
+        <h3>Switches</h3>
+        <p class="number blue">18</p>
+        <span>Equipos de red registrados</span>
+      </div>
+
+    </section>
+
+    <section class="content-grid">
+
+      <div class="panel">
+        <h2>Estado General de la Red</h2>
+
+        <div class="status-row">
+          <span>Conectividad</span>
+          <strong class="green">Estable</strong>
+        </div>
+
+        <div class="status-row">
+          <span>Último escaneo</span>
+          <strong>Hace 5 minutos</strong>
+        </div>
+
+        <div class="status-row">
+          <span>Inventario actualizado</span>
+          <strong class="gold">92%</strong>
+        </div>
+
+        <div class="progress">
+          <div></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Alertas Recientes</h2>
+
+        <div class="alert red-alert">
+          <strong>PC-LAB-03 desconectada</strong>
+          <p>Edificio A · Piso 1 · Laboratorio 2</p>
+        </div>
+
+        <div class="alert gold-alert">
+          <strong>IP duplicada detectada</strong>
+          <p>192.168.1.25</p>
+        </div>
+
+        <div class="alert green-alert">
+          <strong>Switch actualizado</strong>
+          <p>SW-EDB-01 responde correctamente</p>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+</body>
+</html>
