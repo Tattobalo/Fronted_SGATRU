@@ -1,3 +1,11 @@
+// Función de protección de interfaz, se ejecuta inmediatamente al cargar el script
+(function protegerInterfaz() {
+    const sesionActiva = localStorage.getItem("sgatru_session");
+    if (!sesionActiva) {
+        window.location.href = "../login.html"; // Redirige al login de inmediato
+    }
+})();
+
 function alternarCamposPorTipo() {
     const tipoActivo = document.getElementById("tipo_activo").value;
     

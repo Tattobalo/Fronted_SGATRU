@@ -4,24 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login SGATRU</title>
-  <link rel="stylesheet" href="../CSS/login.css">
+  <link rel="stylesheet" href="CSS/login.css">
+  <script type="module" src="JS/login.js"></script>
 </head>
 <body>
 
   <div class="login-container">
     <div class="login-card">
 
-      <img src="logo-uaemex.png" alt="Logo UAEMex" class="logo">
+      <img src="IMG/logo-uaemex.png" class="logo" alt="UAEMex">
 
       <h1>SGATRU</h1>
       <h2>Sistema de Gestión de Activos y Topología de Red Universitaria</h2>
 
-      <form>
+      <form id="form-login">
         <label>Usuario</label>
-        <input type="text" placeholder="Ingresa tu usuario" required>
+        <input type="text" id="username" placeholder="Ingresa tu usuario" required>
 
         <label>Contraseña</label>
-        <input type="password" placeholder="Ingresa tu contraseña" required>
+        <input type="password" id="password" placeholder="Ingresa tu contraseña" required>
+
+        <div id="mensaje-error" style="margin-bottom: 15px; font-size: 14px; font-weight: bold; text-align: center;"></div>
 
         <button type="submit">Iniciar sesión</button>
 

@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard SGATRU</title>
   <link rel="stylesheet" href="../CSS/home.css">
+  <script type="module" src="../JS/home.js"></script>
 </head>
 <body>
 
   <aside class="sidebar">
-    <img src="logo-uaemex.png" class="logo" alt="UAEMex">
+    <img src="../IMG/logo-uaemex.png" class="logo" alt="UAEMex">
     <h2>SGATRU</h2>
 
     <nav>
@@ -20,7 +21,6 @@
       <a href="alertas.html">Alertas</a>
       <a href="reportes.html">Reportes</a>
       <a href="usuarios.html">Usuarios</a>
-      
     </nav>
   </aside>
 
@@ -33,8 +33,8 @@
       </div>
 
       <div class="user-box">
-        <span>Administrador</span>
-        <button>Cerrar sesión</button>
+        <span id="usuario-topbar">Administrador</span>
+        <button id="btn-logout">Cerrar sesión</button>
       </div>
     </header>
 
@@ -42,25 +42,25 @@
 
       <div class="card">
         <h3>Equipos Online</h3>
-        <p class="number green">128</p>
+        <p class="number green" id="dash-online">0</p>
         <span>Dispositivos conectados</span>
       </div>
 
       <div class="card">
         <h3>Equipos Offline</h3>
-        <p class="number red">12</p>
+        <p class="number red" id="dash-offline">0</p>
         <span>Dispositivos sin conexión</span>
       </div>
 
       <div class="card">
         <h3>Alertas Activas</h3>
-        <p class="number gold">7</p>
+        <p class="number gold" id="dash-alertas">0</p>
         <span>Incidencias pendientes</span>
       </div>
 
       <div class="card">
         <h3>Switches</h3>
-        <p class="number blue">18</p>
+        <p class="number blue" id="dash-switches">0</p>
         <span>Equipos de red registrados</span>
       </div>
 
@@ -73,40 +73,38 @@
 
         <div class="status-row">
           <span>Conectividad</span>
-          <strong class="green">Estable</strong>
+          <strong class="green" id="dash-status-red">Estable</strong>
         </div>
 
         <div class="status-row">
           <span>Último escaneo</span>
-          <strong>Hace 5 minutos</strong>
+          <strong id="dash-ultimo-escaneo">Hace unos instantes</strong>
         </div>
 
         <div class="status-row">
-          <span>Inventario actualizado</span>
-          <strong class="gold">92%</strong>
+          <span>Inventario mapeado</span>
+          <strong class="gold" id="dash-porcentaje-inventario">0%</strong>
         </div>
 
         <div class="progress">
-          <div></div>
+          <div id="dash-barra-progreso" style="width: 0%;"></div>
         </div>
       </div>
 
       <div class="panel">
         <h2>Alertas Recientes</h2>
+        <div id="contenedor-alertas-recientes">
+          
+          <div class="alert red-alert">
+            <strong>PC-LAB-03 desconectada</strong>
+            <p>Edificio A · Piso 1 · Laboratorio 2</p>
+          </div>
 
-        <div class="alert red-alert">
-          <strong>PC-LAB-03 desconectada</strong>
-          <p>Edificio A · Piso 1 · Laboratorio 2</p>
-        </div>
+          <div class="alert gold-alert">
+            <strong>IP duplicada detectada</strong>
+            <p>192.168.1.25</p>
+          </div>
 
-        <div class="alert gold-alert">
-          <strong>IP duplicada detectada</strong>
-          <p>192.168.1.25</p>
-        </div>
-
-        <div class="alert green-alert">
-          <strong>Switch actualizado</strong>
-          <p>SW-EDB-01 responde correctamente</p>
         </div>
       </div>
 

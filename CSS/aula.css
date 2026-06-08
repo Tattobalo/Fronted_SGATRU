@@ -182,6 +182,14 @@ body {
   border: 4px solid #005b2e;
   border-radius: 18px;
   overflow: hidden;
+
+  /* SOLUCIÓN: Activamos el contenedor de rejilla flexible y centrado */
+  display: flex;
+  flex-wrap: wrap;           /* Si hay muchas PCs, saltarán a la siguiente fila automáticamente */
+  gap: 25px;                 /* Separación armónica entre cada computadora */
+  padding: 30px;             /* Margen interno para que las PCs no toquen el borde verde */
+  justify-content: center;   /* Centra horizontalmente todo el bloque de computadoras */
+  align-content: flex-start; /* Alinea las filas hacia arriba conforme se vayan llenando */
 }
 
 /* mesa central */

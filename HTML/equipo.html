@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Equipo PC-01 - SGATRU</title>
+  <title>Equipo - SGATRU</title>
   <link rel="stylesheet" href="../CSS/equipo.css">
+  <script type="module" src="../JS/equipo.js"></script>
 </head>
 <body>
 
@@ -16,9 +17,9 @@
       <a href="home.html">Dashboard</a>
       <a href="campus.html">Campus</a>
       <a href="edificio.html">Edificios</a>
-      <a href="piso.html">Piso</a>
+      <a href="nivel.html">Piso</a>
       <a href="aula.html">Aula/Laboratorio</a>
-      <a class="active" href="#">Equipo</a>
+      <!-- <a class="active" href="#">Equipo</a> -->
       <a href="inventario.html">Inventario</a>
       <a href="alertas.html">Alertas</a>
     </nav>
@@ -28,12 +29,12 @@
 
     <header class="topbar">
       <div>
-        <h1>PC-01</h1>
-        <p>Edificio A · Piso 1 · Laboratorio 1 · Fila 1 Asiento 1</p>
+        <h1 id="eq-titulo-hostname">Cargando...</h1>
+        <p id="eq-ubicacion-subtitulo">Ubicación · Monitoreo de activos</p>
       </div>
 
       <div class="status-box">
-        <span class="status online">● Online</span>
+        <span class="status online" id="eq-badge-estado">● Leyendo estado...</span>
       </div>
     </header>
 
@@ -41,22 +42,22 @@
 
       <div class="quick-card">
         <h3>IP</h3>
-        <p>192.168.1.11</p>
+        <p id="eq-quick-ip">-</p>
       </div>
 
       <div class="quick-card">
         <h3>MAC</h3>
-        <p>AA:BB:CC:11:22:01</p>
+        <p id="eq-quick-mac">-</p>
       </div>
 
       <div class="quick-card">
         <h3>Puerto</h3>
-        <p>SW-LAB01 / P01</p>
+        <p id="eq-quick-puerto">-</p>
       </div>
 
       <div class="quick-card">
         <h3>Última conexión</h3>
-        <p>02/06/2026 18:35</p>
+        <p>Reciente</p>
       </div>
 
     </section>
@@ -68,27 +69,27 @@
 
         <div class="data-row">
           <span>Hostname</span>
-          <strong>PC-LAB01-01</strong>
+          <strong id="eq-det-hostname">-</strong>
         </div>
 
         <div class="data-row">
           <span>Dirección IP</span>
-          <strong>192.168.1.11</strong>
+          <strong id="eq-det-ip">-</strong>
         </div>
 
         <div class="data-row">
           <span>MAC Address</span>
-          <strong>AA:BB:CC:11:22:01</strong>
+          <strong id="eq-det-mac">-</strong>
         </div>
 
         <div class="data-row">
           <span>Switch</span>
-          <strong>SW-LAB01</strong>
+          <strong id="eq-det-switch">-</strong>
         </div>
 
         <div class="data-row">
           <span>Puerto físico</span>
-          <strong>Puerto 01</strong>
+          <strong id="eq-det-puertonombre">-</strong>
         </div>
       </div>
 
@@ -97,80 +98,40 @@
 
         <div class="data-row">
           <span>Campus</span>
-          <strong>CU Tianguistenco</strong>
+          <strong id="eq-det-campus">CU Tianguistenco</strong>
         </div>
 
         <div class="data-row">
           <span>Edificio</span>
-          <strong>Edificio A</strong>
+          <strong id="eq-det-edificio">Edificio A</strong>
         </div>
 
         <div class="data-row">
           <span>Piso</span>
-          <strong>Piso 1</strong>
+          <strong id="eq-det-piso">-</strong>
         </div>
 
         <div class="data-row">
           <span>Espacio</span>
-          <strong>Laboratorio 1</strong>
-        </div>
-
-        <div class="data-row">
-          <span>Posición</span>
-          <strong>Fila 1 · Asiento 1</strong>
+          <strong id="eq-det-espacio">-</strong>
         </div>
       </div>
 
       <div class="panel">
-        <h2>Responsable</h2>
+        <h2>Responsable Asignado</h2>
 
         <div class="responsable-card">
-          <div class="avatar">JP</div>
+          <div class="avatar" id="eq-resp-avatar">--</div>
 
           <div>
-            <h3>Ing. Juan Pérez</h3>
-            <p>Responsable de Laboratorio</p>
-            <span>juan.perez@uaemex.mx</span>
+            <h3 id="eq-resp-nombre">Cargando responsable...</h3>
+            <span id="eq-resp-correo">-</span>
           </div>
         </div>
 
         <div class="data-row">
-          <span>Área</span>
-          <strong>Laboratorio de Cómputo</strong>
-        </div>
-
-        <div class="data-row">
           <span>Contacto</span>
-          <strong>722 000 0000</strong>
-        </div>
-      </div>
-
-      <div class="panel">
-        <h2>Hardware</h2>
-
-        <div class="data-row">
-          <span>Procesador</span>
-          <strong>Intel Core i5</strong>
-        </div>
-
-        <div class="data-row">
-          <span>Memoria RAM</span>
-          <strong>16 GB</strong>
-        </div>
-
-        <div class="data-row">
-          <span>Almacenamiento</span>
-          <strong>512 GB SSD</strong>
-        </div>
-
-        <div class="data-row">
-          <span>Sistema Operativo</span>
-          <strong>Windows 11</strong>
-        </div>
-
-        <div class="data-row">
-          <span>No. Serie</span>
-          <strong>UAEM-PC-001</strong>
+          <strong id="eq-resp-telefono">-</strong>
         </div>
       </div>
 
@@ -180,43 +141,20 @@
 
       <div class="panel">
         <h2>Historial de Conexión</h2>
-
-        <div class="timeline">
+        <div class="timeline" id="contenedor-timeline-equipo">
           <div class="timeline-item online-line">
-            <strong>02/06/2026 18:35</strong>
-            <p>Equipo online correctamente</p>
-          </div>
-
-          <div class="timeline-item online-line">
-            <strong>02/06/2026 16:20</strong>
-            <p>Respuesta de ping exitosa</p>
-          </div>
-
-          <div class="timeline-item warning-line">
-            <strong>02/06/2026 14:10</strong>
-            <p>Conectividad intermitente detectada</p>
-          </div>
-
-          <div class="timeline-item online-line">
-            <strong>02/06/2026 10:30</strong>
-            <p>Equipo online correctamente</p>
+            <p>Cargando historial...</p>
           </div>
         </div>
       </div>
 
       <div class="panel">
         <h2>Alertas Asociadas</h2>
-
-        <div class="alert warning-alert">
-          <strong>⚠ Cambio de IP detectado</strong>
-          <p>La dirección IP fue actualizada el 28/05/2026.</p>
+        <div id="contenedor-alertas-equipo">
+          <div class="alert green-alert">
+            <p>Buscando incidencias...</p>
+          </div>
         </div>
-
-        <div class="alert red-alert">
-          <strong>⚠ Desconexión temporal</strong>
-          <p>El equipo no respondió durante 3 minutos el 01/06/2026.</p>
-        </div>
-
         <button class="report-btn">Generar reporte del equipo</button>
       </div>
 

@@ -1,3 +1,11 @@
+// Función de protección de interfaz, se ejecuta inmediatamente al cargar el script
+(function protegerInterfaz() {
+    const sesionActiva = localStorage.getItem("sgatru_session");
+    if (!sesionActiva) {
+        window.location.href = "../login.html"; // Redirige al login de inmediato
+    }
+})();
+
 import { get } from './api.js';
 
 // Renderizado específico dependiendo de la página en la que se navegue

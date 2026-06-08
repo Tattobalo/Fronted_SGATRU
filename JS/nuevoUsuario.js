@@ -1,3 +1,11 @@
+// Función de protección de interfaz, se ejecuta inmediatamente al cargar el script
+(function protegerInterfaz() {
+    const sesionActiva = localStorage.getItem("sgatru_session");
+    if (!sesionActiva) {
+        window.location.href = "../login.html"; // Redirige al login de inmediato
+    }
+})();
+
 import { post, get } from './api.js';
 
 // Variables globales para mantener la caché local de la estructura física
@@ -122,7 +130,7 @@ async function registrarUsuario(event) {
     };
 
     try {
-        const resultado = await post('/assets/responsables/', datosUsuario);
+        const resultado = await post('assets/responsables/', datosUsuario);
         console.log("Usuario registrado con éxito:", resultado);
         alert("¡Usuario registrado exitosamente en el sistema!");
         window.location.href = 'usuarios.html';
