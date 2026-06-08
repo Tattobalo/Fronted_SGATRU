@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Campus - SGATRU</title>
     <link rel="stylesheet" href="../CSS/campus.css">
+    <script type="module" src="../JS/campus.js"></script>
 </head>
 <body>
 
@@ -17,13 +18,13 @@
         <nav>
             <a href="home.html">Dashboard</a>
             <a class="active" href="#">Campus</a>
-            a href="edificio.html">Edificios</a>
+            <!-- <a href="edificio.html">Edificios</a> -->
             <a href="nivel.html">Piso</a>
             <a href="edificio.html">Aula/Laboratorio</a>
             <a href="inventario.html">Inventario</a>
             <a href="alertas.html">Alertas</a>
-            <a href="#">Reportes</a>
-            <a href="#">Usuarios</a>
+            <a href="reportes.html">Reportes</a>
+            <a href="usuarios.html">Usuarios</a>
     </nav>
         </nav>
 
@@ -66,79 +67,8 @@
 
         </section>
 
-        <section class="buildings">
-
-            <div class="building-card">
-                <h2> Edificio A</h2>
-                <span class="status online">● Operativo</span>
-                <p>45 activos registrados</p>
-                <button><a href="nivel.html">Ver aulas</a></button>
-            </div>
-
-            <div class="building-card">
-                <h2> Edificio B</h2>
-                <span class="status warning">● Con alertas</span>
-                <p>32 activos registrados</p>
-                <button>Ver edificio</button>
-            </div>
-
-            <div class="building-card">
-                <h2> Edificio C</h2>
-                <span class="status online">● Operativo</span>
-                <p>30 activos registrados</p>
-                <button>Ver edificio</button>
-            </div>
-
-            <div class="building-card">
-                <h2> Edificio D</h2>
-                <span class="status online">● Operativo</span>
-                <p>45 activos registrados</p>
-                <button>Ver edificio</button>
-            </div>
-
-            <div class="building-card">
-                <h2> Edificio E</h2>
-                <span class="status online">● Operativo</span>
-                <p>45 activos registrados</p>
-                <button>Ver edificio</button>
-            </div>
-
-
-            <div class="building-card">
-                <h2> Edificio E</h2>
-                <span class="status online">● Operativo</span>
-                <p>45 activos registrados</p>
-                <button>Ver edificio</button>
-            </div>
-
-            <div class="building-card">
-                <h2> Biblioteca</h2>
-                <span class="status online">● Operativo</span>
-                <p>18 activos registrados</p>
-                <button>Ver edificio</button>
-            </div>
-
-            <div class="building-card">
-                <h2> Laboratorio</h2>
-                <span class="status offline">● Fallas detectadas</span>
-                <p>28 activos registrados</p>
-                <button>Ver edificio</button>
-            </div>
-
-            <div class="building-card">
-                <h2> Área Administrativa</h2>
-                <span class="status online">● Operativo</span>
-                <p>20 activos registrados</p>
-                <button>Ver edificio</button>
-            </div>
-
-            <div class="building-card">
-                <h2> Auditorio</h2>
-                <span class="status warning">● Con alertas</span>
-                <p>10 activos registrados</p>
-                <button>Ver edificio</button>
-            </div>
-
+        <section class="buildings" id="contenedor-edificios">
+            <p>Cargando edificios...</p>
         </section>
 
     </main>
