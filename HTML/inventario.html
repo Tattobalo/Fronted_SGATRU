@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
   <link rel="stylesheet" href="../CSS/inventario.css">
   <script type="module" src="../JS/inventario.js"></script>
 </head>
+
 <body>
 
   <aside class="sidebar">
@@ -33,7 +35,9 @@
         <h1>Inventario de Activos</h1>
         <p>Registro general de equipos, red, responsables y ubicación física</p>
       </div>
-      <a href="nuevoActivo.html" class="add-btn">+ Nuevo activo</a>
+      <a href="#/nuevoActivo" data-link class="add-btn">
+        + Nuevo activo
+      </a>
     </header>
 
     <section class="inventory-summary">
@@ -65,7 +69,7 @@
       </select>
       <select id="filtro-edificio-activo">
         <option value="">Todos los edificios</option>
-        </select>
+      </select>
       <button id="btn-filtrar-activo">Filtrar</button>
     </section>
 
@@ -88,11 +92,12 @@
           </tr>
         </thead>
         <tbody>
-          </tbody>
+        </tbody>
       </table>
     </section>
 
   </main>
 
 </body>
+
 </html>

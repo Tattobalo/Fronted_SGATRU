@@ -7,8 +7,9 @@
 })();
 
 import { get } from './api.js';
+import { navegarA } from './router.js'; // Importación necesaria para el enrutamiento SPA
 
-async function inicializarMapaNivel() {
+export async function inicializarMapaNivel() {
     const mapaContainer = document.getElementById("contenedor-mapa-aulas");
     if (!mapaContainer) return;
 
@@ -71,8 +72,13 @@ async function inicializarMapaNivel() {
                 <h3>${espacio.nombre_aula}</h3>
                 <span class="online">● Operativo</span>
                 <p>${textoActivos}</p>
-                <a href="aula.html?id=${espacio.id_espacio}">Ver aula</a>
+                <button class="btn-view-aula" style="display: inline-block; background: #005b2e; color: white; border: none; padding: 9px 14px; border-radius: 8px; font-size: 14px; cursor: pointer; font-weight: bold;">Ver aula</button>
             `;
+
+            // Interceptamos el clic para navegar dentro de la SPA sin recargar
+            card.querySelector('.btn-view-aula').addEventListener('click', () => {
+                navegarA(`/aula?id=${espacio.id_espacio}`);
+            });
 
             mapaContainer.appendChild(card);
         });
@@ -87,5 +93,3 @@ async function inicializarMapaNivel() {
         console.error("Error al procesar el layout:", error);
     }
 }
-
-document.addEventListener("DOMContentLoaded", inicializarMapaNivel);

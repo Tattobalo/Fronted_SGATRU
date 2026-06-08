@@ -12,7 +12,6 @@ async function ejecutarLogin(event) {
     // =========================================================================
     // 1. BYPASS DE DESARROLLO (Prioridad Máxima)
     // =========================================================================
-    // Si usas cualquiera de tus usuarios administradores de prueba, entras directo
     if (usuarioInput === "kminigo" || usuarioInput === "kuriel" || usuarioInput === "admin") {
         console.log("Acceso concedido mediante bypass local de auditoría.");
         localStorage.setItem("sgatru_session", JSON.stringify({
@@ -21,8 +20,8 @@ async function ejecutarLogin(event) {
             token: "dev_session_bypass_authorized"
         }));
         
-        // Redirección directa al Dashboard
-        window.location.href = "HTML/home.html";
+        // CORRECCIÓN SPA: Apunta al home virtual por hash y sube un nivel a la raíz
+        window.location.href = "../index.html#/home";
         return; 
     }
 
@@ -53,7 +52,8 @@ async function ejecutarLogin(event) {
                 token: respuesta.access_token
             }));
             
-            window.location.href = "HTML/home.html";
+            // CORRECCIÓN SPA: Apunta al home virtual por hash y sube un nivel a la raíz
+            window.location.href = "../index.html#/home";
             return;
         } else {
             const errorData = await response.json().catch(() => ({}));
@@ -67,7 +67,6 @@ async function ejecutarLogin(event) {
         console.warn("El backend no respondió de forma limpia.", apiError);
     }
 
-    // Mensaje de error general si falla todo lo demás
     if (contenedorError) {
         contenedorError.textContent = "Usuario o contraseña incorrectos.";
         contenedorError.style.color = "#d9534f";

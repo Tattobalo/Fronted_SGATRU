@@ -51,3 +51,26 @@ export async function del(endpoint) {
     if (!response.ok) throw new Error("Error al eliminar el recurso");
     return true;
 }
+
+export async function put(endpoint, data) {
+    const rutaLimpia = endpoint.startsWith('/')
+        ? endpoint.slice(1)
+        : endpoint;
+
+    const urlDestino = `${API_URL.replace(/\/$/, "")}/${rutaLimpia}`;
+
+    const response = await fetch(urlDestino, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.detail || "Error al actualizar el recurso");
+    }
+
+    return await response.json();
+}

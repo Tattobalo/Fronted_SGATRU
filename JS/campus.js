@@ -1,22 +1,12 @@
-// Función de protección de interfaz, se ejecuta inmediatamente al cargar el script
-(function protegerInterfaz() {
-    const sesionActiva = localStorage.getItem("sgatru_session");
-    if (!sesionActiva) {
-        window.location.href = "../login.html"; // Redirige al login de inmediato
-    }
-})();
-
 import { get } from './api.js';
+import { navegarA } from './router.js'; // <-- Importamos el navegador SPA
 
-async function renderizarEdificios() {
+export async function renderizarEdificios() {
     try {
         const edificios = await get('/locations/edificios/');
-        console.log("Edificios obtenidos:", edificios); // MIRA ESTO EN TU CONSOLA F12
-        
         const contenedor = document.getElementById('contenedor-edificios');
         if (!contenedor) return;
-
-        contenedor.innerHTML = ''; // Limpiamos "Cargando..."
+        contenedor.innerHTML = ''; 
 
         edificios.forEach(edificio => {
             const card = document.createElement('div');
@@ -25,16 +15,15 @@ async function renderizarEdificios() {
                 <h2>${edificio.nombre}</h2>
                 <span class="status online">● Operativo</span>
                 <p>Cargando datos...</p>
-                <button onclick="window.location.href='edificio.html?id=${edificio.id_edificio}'">
-                    Ver edificio
-                </button>
+                <button class="btn-click-edificio">Ver edificio</button>
             `;
+            // Escuchador SPA en lugar de un onclick plano en HTML
+            card.querySelector('.btn-click-edificio').onclick = () => {
+                navegarA(`/edificio?id=${edificio.id_edificio}`);
+            };
             contenedor.appendChild(card);
         });
     } catch (error) {
-        console.error("Error crítico en renderizado:", error);
-        document.getElementById('contenedor-edificios').innerHTML = '<p>Error al cargar edificios.</p>';
+        console.error(error);
     }
 }
-
-document.addEventListener("DOMContentLoaded", renderizarEdificios);

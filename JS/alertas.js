@@ -8,7 +8,7 @@
 
 import { get } from './api.js';
 
-async function cargarAlertas() {
+export async function cargarAlertas() {
     const grid = document.getElementById("contenedor-tarjetas-alertas");
     if (!grid) return;
 

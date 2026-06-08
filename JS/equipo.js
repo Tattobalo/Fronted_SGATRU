@@ -8,7 +8,8 @@
 
 import { get } from './api.js';
 
-async function inicializarDetalleEquipo() {
+// Exportamos la función para que el enrutador la ejecute tras renderizar el DOM virtual
+export async function inicializarDetalleEquipo() {
     const params = new URLSearchParams(window.location.search);
     const idActivo = params.get("id") || "2"; // Por defecto toma el id: 2
 
@@ -213,10 +214,4 @@ async function inicializarDetalleEquipo() {
     } catch (error) {
         console.error("Error al poblar la auditoría limpia del dispositivo:", error);
     }
-}
-
-if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", inicializarDetalleEquipo);
-} else {
-    inicializarDetalleEquipo();
 }
