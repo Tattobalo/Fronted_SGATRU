@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Nuevo Usuario - SGATRU</title>
   <link rel="stylesheet" href="../CSS/nuevoUsuario.css">
+  <script type="module" src="../JS/nuevoUsuario.js"></script>
 </head>
 <body>
 
@@ -36,29 +37,30 @@
 
     <section class="form-section">
 
-      <form class="user-form">
+      <!-- Se añade el ID 'form-nuevo-usuario' para interceptar el evento submit con JavaScript -->
+      <form class="user-form" id="form-nuevo-usuario">
 
         <h2>Datos personales</h2>
 
         <div class="form-grid">
           <div class="form-group">
-            <label>Nombre completo</label>
-            <input type="text" placeholder="Ej. Karen Minigo" required>
+            <label for="nombre_completo">Nombre completo</label>
+            <input type="text" id="nombre_completo" placeholder="Ej. Karen Minigo" required>
           </div>
 
           <div class="form-group">
-            <label>Correo institucional</label>
-            <input type="email" placeholder="usuario@uaemex.mx" required>
+            <label for="correo">Correo institucional</label>
+            <input type="email" id="correo" placeholder="usuario@uaemex.mx" required>
           </div>
 
           <div class="form-group">
-            <label>Teléfono</label>
-            <input type="tel" placeholder="722 000 0000">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" placeholder="722 000 0000">
           </div>
 
           <div class="form-group">
-            <label>Cargo</label>
-            <input type="text" placeholder="Ej. Responsable de laboratorio">
+            <label for="cargo">Cargo</label>
+            <input type="text" id="cargo" placeholder="Ej. Responsable de laboratorio">
           </div>
         </div>
 
@@ -66,25 +68,25 @@
 
         <div class="form-grid">
           <div class="form-group">
-            <label>Nombre de usuario</label>
-            <input type="text" placeholder="Ej. kminigo" required>
+            <label for="username">Nombre de usuario</label>
+            <input type="text" id="username" placeholder="Ej. kminigo" required>
           </div>
 
           <div class="form-group">
-            <label>Contraseña temporal</label>
-            <input type="password" placeholder="Contraseña temporal" required>
+            <label for="password">Contraseña temporal</label>
+            <input type="password" id="password" placeholder="Contraseña temporal" required>
           </div>
 
           <div class="form-group">
-            <label>Confirmar contraseña</label>
-            <input type="password" placeholder="Confirmar contraseña" required>
+            <label for="confirm_password">Confirmar contraseña</label>
+            <input type="password" id="confirm_password" placeholder="Confirmar contraseña" required>
           </div>
 
           <div class="form-group">
-            <label>Estado</label>
-            <select>
-              <option>Activo</option>
-              <option>Inactivo</option>
+            <label for="estado">Estado</label>
+            <select id="estado">
+              <option value="true">Activo</option>
+              <option value="false">Inactivo</option>
             </select>
           </div>
         </div>
@@ -93,46 +95,36 @@
 
         <div class="form-grid">
           <div class="form-group">
-            <label>Rol del usuario</label>
-            <select required>
+            <label for="rol">Rol del usuario</label>
+            <select id="rol" required>
               <option value="">Selecciona un rol</option>
-              <option>Administrador de Red</option>
-              <option>Responsable de Área</option>
-              <option>Auxiliar de Inventario</option>
-              <option>Usuario de Consulta</option>
+              <option value="Administrador de Red">Administrador de Red</option>
+              <option value="Responsable de Área">Responsable de Área</option>
+              <option value="Auxiliar de Inventario">Auxiliar de Inventario</option>
+              <option value="Usuario de Consulta">Usuario de Consulta</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label>Edificio asignado</label>
-            <select>
-              <option>Campus completo</option>
-              <option>Edificio A</option>
-              <option>Edificio B</option>
-              <option>Biblioteca</option>
-              <option>Laboratorio</option>
-            </select>
+            <label for="edificio_asignado">Edificio asignado</label>
+            <select id="edificio_asignado" required>
+              <option value="">Selecciona un edificio</option>
+              <option value="Campus completo">Campus completo</option>
+              </select>
           </div>
 
           <div class="form-group">
-            <label>Piso asignado</label>
-            <select>
-              <option>Todos</option>
-              <option>Piso 1</option>
-              <option>Piso 2</option>
-              <option>Piso 3</option>
-            </select>
+            <label for="piso_asignado">Piso asignado</label>
+            <select id="piso_asignado" required disabled>
+              <option value="">Selecciona un piso</option>
+              </select>
           </div>
 
           <div class="form-group">
-            <label>Aula/Laboratorio</label>
-            <select>
-              <option>Todos</option>
-              <option>Laboratorio 1</option>
-              <option>Laboratorio 2</option>
-              <option>Aula 101</option>
-              <option>Cuarto de Red</option>
-            </select>
+            <label for="aula_asignada">Aula/Laboratorio</label>
+            <select id="aula_asignada" required disabled>
+              <option value="">Selecciona un espacio</option>
+              </select>
           </div>
         </div>
 
@@ -141,32 +133,32 @@
         <div class="permissions-grid">
 
           <label class="permission-card">
-            <input type="checkbox" checked>
+            <input type="checkbox" id="permiso_dashboard" value="ver_dashboard" checked>
             <span>Ver dashboard</span>
           </label>
 
           <label class="permission-card">
-            <input type="checkbox" checked>
+            <input type="checkbox" id="permiso_inventario" value="consultar_inventario" checked>
             <span>Consultar inventario</span>
           </label>
 
           <label class="permission-card">
-            <input type="checkbox">
+            <input type="checkbox" id="permiso_editar" value="editar_activos">
             <span>Editar activos</span>
           </label>
 
           <label class="permission-card">
-            <input type="checkbox">
+            <input type="checkbox" id="permiso_usuarios" value="gestionar_usuarios">
             <span>Gestionar usuarios</span>
           </label>
 
           <label class="permission-card">
-            <input type="checkbox">
+            <input type="checkbox" id="permiso_escaneos" value="ejecutar_escaneos">
             <span>Ejecutar escaneos</span>
           </label>
 
           <label class="permission-card">
-            <input type="checkbox" checked>
+            <input type="checkbox" id="permiso_reportes" value="generar_reportes" checked>
             <span>Generar reportes</span>
           </label>
 

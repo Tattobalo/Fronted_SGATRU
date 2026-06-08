@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Usuarios - SGATRU</title>
   <link rel="stylesheet" href="../CSS/usuarios.css">
+  <script type="module" src="../JS/usuarios.js"></script>
 </head>
 <body>
 
@@ -15,6 +16,7 @@
       <a href="home.html">Dashboard</a>
       <a href="campus.html">Campus</a>
       <a href="edificio.html">Edificios</a>
+      <a href="topologia.html">Topología</a>
       <a href="inventario.html">Inventario</a>
       <a href="alertas.html">Alertas</a>
       <a href="reportes.html">Reportes</a>
@@ -33,139 +35,82 @@
     </header>
 
     <section class="user-summary">
-
       <div class="summary-card">
         <h3>Total usuarios</h3>
-        <p>24</p>
+        <p id="resumen-total-usuarios">-</p>
       </div>
 
       <div class="summary-card">
         <h3>Administradores</h3>
-        <p class="green">4</p>
+        <p class="green" id="resumen-admins">-</p>
       </div>
 
       <div class="summary-card">
         <h3>Responsables</h3>
-        <p class="gold">8</p>
+        <p class="gold" id="resumen-responsables">-</p>
       </div>
 
       <div class="summary-card">
         <h3>Consulta</h3>
-        <p>12</p>
+        <p id="resumen-consulta">-</p>
       </div>
-
     </section>
 
     <section class="roles-section">
-
       <h2>Roles del Sistema</h2>
-
       <div class="roles-grid">
-
         <div class="role-card admin">
           <h3>Administrador de Red</h3>
           <p>Acceso total al sistema, configuración de escaneos, gestión de usuarios y topología.</p>
         </div>
-
         <div class="role-card responsable">
           <h3>Responsable de Área</h3>
           <p>Gestión de activos físicos dentro del edificio, piso o laboratorio asignado.</p>
         </div>
-
         <div class="role-card auxiliar">
           <h3>Auxiliar de Inventario</h3>
           <p>Registro, actualización y validación de información de hardware.</p>
         </div>
-
         <div class="role-card consulta">
           <h3>Usuario de Consulta</h3>
           <p>Acceso de solo lectura a mapas, estados de equipos y reportes básicos.</p>
         </div>
-
       </div>
-
     </section>
 
     <section class="filters">
-      <input type="text" placeholder="Buscar por nombre, correo o rol...">
-
-      <select>
-        <option>Todos los roles</option>
-        <option>Administrador de Red</option>
-        <option>Responsable de Área</option>
-        <option>Auxiliar de Inventario</option>
-        <option>Usuario de Consulta</option>
+      <input type="text" id="filtro-busqueda" placeholder="Buscar por nombre, correo o rol...">
+      <select id="filtro-rol">
+        <option value="">Todos los roles</option>
+        <option value="Administrador de Red">Administrador de Red</option>
+        <option value="Responsable de Área">Responsable de Área</option>
+        <option value="Auxiliar de Inventario">Auxiliar de Inventario</option>
+        <option value="Usuario de Consulta">Usuario de Consulta</option>
       </select>
-
-      <select>
-        <option>Todos los estados</option>
-        <option>Activo</option>
-        <option>Inactivo</option>
+      <select id="filtro-estado">
+        <option value="">Todos los estados</option>
+        <option value="true">Activo</option>
+        <option value="false">Inactivo</option>
       </select>
-
-      <button>Filtrar</button>
+      <button id="btn-filtrar-usuarios">Filtrar</button>
     </section>
 
     <section class="table-section">
-
       <h2>Listado de Usuarios</h2>
-
-      <table>
+      <table id="tabla-usuarios">
         <thead>
           <tr>
-            <th>Usuario</th>
-            <th>Correo</th>
+            <th>Usuario / Nombre</th>
+            <th>Nombre de usuario</th>
             <th>Rol</th>
-            <th>Área asignada</th>
+            <th>Cargo</th>
             <th>Estado</th>
-            <th>Último acceso</th>
             <th>Acción</th>
           </tr>
         </thead>
-
         <tbody>
-          <tr>
-            <td>Karen Minigo</td>
-            <td>karen.minigo@uaemex.mx</td>
-            <td>Administrador de Red</td>
-            <td>Campus completo</td>
-            <td><span class="badge active-badge">Activo</span></td>
-            <td>02/06/2026 18:45</td>
-            <td><a href="#">Editar</a></td>
-          </tr>
-
-          <tr>
-            <td>Juan Pérez</td>
-            <td>juan.perez@uaemex.mx</td>
-            <td>Responsable de Área</td>
-            <td>Laboratorio 1</td>
-            <td><span class="badge active-badge">Activo</span></td>
-            <td>02/06/2026 17:10</td>
-            <td><a href="#">Editar</a></td>
-          </tr>
-
-          <tr>
-            <td>María López</td>
-            <td>maria.lopez@uaemex.mx</td>
-            <td>Auxiliar de Inventario</td>
-            <td>Edificio A</td>
-            <td><span class="badge active-badge">Activo</span></td>
-            <td>01/06/2026 12:25</td>
-            <td><a href="#">Editar</a></td>
-          </tr>
-
-          <tr>
-            <td>Soporte TI</td>
-            <td>soporte.ti@uaemex.mx</td>
-            <td>Usuario de Consulta</td>
-            <td>Todos los edificios</td>
-            <td><span class="badge inactive-badge">Inactivo</span></td>
-            <td>28/05/2026 09:30</td>
-            <td><a href="#">Editar</a></td>
-          </tr>
-        </tbody>
+          </tbody>
       </table>
-
     </section>
 
   </main>
