@@ -1,11 +1,22 @@
+(function protegerInterfaz() {
+    const sesionActiva = localStorage.getItem("sgatru_session");
+    if (!sesionActiva) {
+        window.location.href = "login.html"; // Redirige al login de inmediato
+    }
+})();
+
 import { get } from './api.js';
 import { navegarA } from './router.js';
+import { obtenerParametrosHash } from './router.js';
+
 
 export async function inicializarEdificio() {
     const contenedorDistribucion = document.getElementById("contenedor-pisos") || document.getElementById("Distribucion-infraestructura") || document.querySelector(".main-content section:last-of-type p");
-    
-    const params = new URLSearchParams(window.location.search);
-    const idEdificio = params.get("id") || "4";
+
+    const params = obtenerParametrosHash();
+
+    const idEdificio =
+        params.get("id") || "4";
 
     let edificios = [], niveles = [], espacios = [], activos = [], alertas = [];
 
@@ -28,8 +39,14 @@ export async function inicializarEdificio() {
         if (edificioActual && document.getElementById("nombre-edificio")) {
             document.getElementById("nombre-edificio").textContent = edificioActual.nombre;
         }
+        console.log("ID edificio:", idEdificio);
+        console.log("Niveles:", niveles);
 
-        const nivelesDelEdificio = niveles.filter(n => Number(n.id_edificio) === Number(idEdificio));
+        const nivelesDelEdificio = niveles.filter(
+            n => Number(n.id_edificio) === Number(idEdificio)
+        );
+
+        console.log("Niveles filtrados:", nivelesDelEdificio)
         const idsNiveles = nivelesDelEdificio.map(n => n.id_nivel);
 
         const espaciosDelEdificio = espacios.filter(e => idsNiveles.includes(e.id_nivel));
@@ -56,35 +73,46 @@ export async function inicializarEdificio() {
                 return;
             }
 
-            nivelesDelEdificio.sort((a, b) => b.numero_nivel - a.numero_nivel).forEach(nivel => {
-                const divNivel = document.createElement("div");
-                divNivel.className = "nivel-contenedor";
-                divNivel.style.cssText = "background:#f9f9f9; padding:15px; border-radius:8px; margin-bottom:15px; border-left:5px solid #005b2e; text-align:left;";
-                
-                const espaciosDelPiso = espaciosDelEdificio.filter(e => Number(e.id_nivel) === Number(nivel.id_nivel));
-                
-                const contenedorBotones = document.createElement("div");
-                contenedorBotones.style.cssText = "display:flex; flex-wrap:wrap;";
+            nivelesDelEdificio
+                .sort((a, b) => b.numero_nivel - a.numero_nivel)
+                .forEach((nivel, index) => {
 
-                if (espaciosDelPiso.length === 0) {
-                    contenedorBotones.innerHTML = `<span style="color:#888; font-size:13px; font-style:italic;">Sin laboratorios asignados</span>`;
-                } else {
-                    espaciosDelPiso.forEach(esp => {
-                        const btnAula = document.createElement("button");
-                        btnAula.style.cssText = "display:inline-block; background:#fff; border:1px solid #ddd; padding:6px 12px; border-radius:6px; margin:5px; color:#333; font-weight:bold; font-size:13px; cursor:pointer;";
-                        btnAula.textContent = ` Navarre 🚪 ${esp.nombre_aula}`;
-                        
-                        btnAula.addEventListener("click", () => {
-                            navegarA(`/aula?id=${esp.id_espacio}`);
-                        });
-                        contenedorBotones.appendChild(btnAula);
+                    const espaciosNivel = espacios.filter(
+                        e => Number(e.id_nivel) === Number(nivel.id_nivel)
+                    );
+
+                    const idsEspaciosNivel = espaciosNivel.map(e => e.id_espacio);
+
+                    const activosNivel = activos.filter(
+                        a => idsEspaciosNivel.includes(a.id_espacio)
+                    );
+
+                    const card = document.createElement("div");
+
+                    card.className = "floor-card";
+
+                    card.innerHTML = `
+                    <h3>Piso ${nivel.numero_nivel}</h3>
+
+                    <span class="status online">
+                        ● Operativo
+                    </span>
+
+                    <div class="floor-data">
+                        <p><strong>Aulas:</strong> ${espaciosNivel.length}</p>
+                        <p><strong>Activos:</strong> ${activosNivel.length}</p>
+                    </div>
+                    `;
+
+                    card.style.cursor = "pointer";
+
+                    card.addEventListener("click", () => {
+                        navegarA(`/nivel?id=${nivel.id_nivel}`);
                     });
-                }
 
-                divNivel.innerHTML = `<strong style="display:block; font-size:16px; color:#005b2e; margin-bottom:10px;">Piso ${nivel.numero_nivel}</strong>`;
-                divNivel.appendChild(contenedorBotones);
-                contenedorDistribucion.appendChild(divNivel);
-            });
+                    contenedorDistribucion.appendChild(card);
+
+                });
         }
     } catch (error) {
         console.error("Error en la topología:", error);

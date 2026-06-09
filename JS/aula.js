@@ -1,9 +1,22 @@
+(function protegerInterfaz() {
+    const sesionActiva = localStorage.getItem("sgatru_session");
+    if (!sesionActiva) {
+        window.location.href = "login.html"; // Redirige al login de inmediato
+    }
+})();
+
 import { get } from './api.js';
-import { navegarA } from './router.js';
+import { navegarA, obtenerParametrosHash } from './router.js';
 
 export async function inicializarAula() {
-    const params = new URLSearchParams(window.location.search);
-    const idAula = params.get("id") || "3";
+
+    const params = obtenerParametrosHash();
+
+    const idAula =
+        params.get("id") ||
+        params.get("id_espacio") ||
+        "3";
+
     const contenedorPlano = document.getElementById("mapa-interactivo-aula");
 
     let activos = [], alertas = [], espacios = [], niveles = [];

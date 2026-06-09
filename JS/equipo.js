@@ -2,16 +2,22 @@
 (function protegerInterfaz() {
     const sesionActiva = localStorage.getItem("sgatru_session");
     if (!sesionActiva) {
-        window.location.href = "../login.html"; // Redirige al login de inmediato
+        window.location.href = "login.html"; // Redirige al login de inmediato
     }
 })();
 
 import { get } from './api.js';
+import { obtenerParametrosHash } from './router.js';
 
 // Exportamos la función para que el enrutador la ejecute tras renderizar el DOM virtual
 export async function inicializarDetalleEquipo() {
-    const params = new URLSearchParams(window.location.search);
-    const idActivo = params.get("id") || "2"; // Por defecto toma el id: 2
+
+    const params = obtenerParametrosHash();
+
+    const idActivo =
+        params.get("id") ||
+        params.get("id_activo") ||
+        "2";
 
     // Inicializamos las variables de datos vacías incorporando 'edificios'
     let activos = [], responsables = [], espacios = [], niveles = [], edificios = [], conexiones = [], switches = [], alertas = [];
@@ -29,7 +35,7 @@ export async function inicializarDetalleEquipo() {
 
     } catch (networkError) {
         console.warn("NetworkError: Servidor o túnel inaccesible. Cargando paracaídas de datos locales de desarrollo...");
-        
+
         // PARACAÍDAS LOCAL: Datos de prueba ajustados a tu BD de PostgreSQL
         activos = [{
             id_activo: idActivo,
@@ -64,7 +70,7 @@ export async function inicializarDetalleEquipo() {
         // 3. Inyectar Campos de Red Reales de la tabla 'activos'
         document.getElementById("eq-titulo-hostname").textContent = activoActual.hostname;
         document.getElementById("eq-det-hostname").textContent = activoActual.hostname;
-        
+
         const ipReal = activoActual.ip_estatica || "DHCP (Dinámica)";
         document.getElementById("eq-quick-ip").textContent = ipReal;
         document.getElementById("eq-det-ip").textContent = ipReal;
@@ -78,7 +84,7 @@ export async function inicializarDetalleEquipo() {
             document.getElementById("eq-resp-nombre").textContent = responsable.nombre_completo;
             document.getElementById("eq-resp-correo").textContent = responsable.correo || "Sin correo registrado";
             document.getElementById("eq-resp-telefono").textContent = responsable.telefono || "Sin teléfono";
-            
+
             // Iniciales dinámicas para el círculo estético del avatar
             const iniciales = responsable.nombre_completo.split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase();
             document.getElementById("eq-resp-avatar").textContent = iniciales;
@@ -99,13 +105,13 @@ export async function inicializarDetalleEquipo() {
             nombreAula = espacio.nombre_aula;
             // Inyectamos dinámicamente en el panel el nombre del Espacio/Aula
             document.getElementById("eq-det-espacio").textContent = espacio.nombre_aula;
-            
+
             const nivel = niveles.find(n => Number(n.id_nivel) === Number(espacio.id_nivel));
             if (nivel) {
                 numeroPiso = nivel.numero_nivel;
                 // Inyectamos dinámicamente en el panel el número de Piso
                 document.getElementById("eq-det-piso").textContent = `Piso ${nivel.numero_nivel}`;
-                
+
                 // Buscamos el edificio usando la propiedad real de tu BD '.nombre'
                 const edificioActual = edificios.find(ed => Number(ed.id_edificio) === Number(nivel.id_edificio));
                 if (edificioActual) {
@@ -120,18 +126,18 @@ export async function inicializarDetalleEquipo() {
         }
         if (document.getElementById("eq-det-campus")) {
             // Como tu proyecto está centralizado en tu centro universitario, lo mapeamos dinámicamente
-            document.getElementById("eq-det-campus").textContent = "CU Tianguistenco"; 
+            document.getElementById("eq-det-campus").textContent = "CU Tianguistenco";
         }
 
         // Actualizamos el subtítulo superior de la Topbar con los datos reales de la BD
         document.getElementById("eq-ubicacion-subtitulo").textContent = `${nombreEdificio} · Piso ${numeroPiso} · ${nombreAula}`;
-        
+
         // 6. Inyectar Campos Reales de Enlace de Red (conexiones_puerto -> switches)
         const conexion = conexiones.find(c => Number(c.id_activo) === Number(idActivo));
         if (conexion) {
             const sw = switches.find(s => Number(s.id_switch) === Number(conexion.id_switch));
             const nombreSwitch = sw ? sw.nombre_del_equipo : "Switch General";
-            
+
             document.getElementById("eq-quick-puerto").textContent = `${nombreSwitch} / ${conexion.puerto_etiqueta}`;
             document.getElementById("eq-det-switch").textContent = nombreSwitch;
             document.getElementById("eq-det-puertonombre").textContent = `Puerto ${conexion.puerto_etiqueta}`;
@@ -152,13 +158,13 @@ export async function inicializarDetalleEquipo() {
 
         if (tieneCriticas) {
             badgeEstado.textContent = "● Offline";
-            badgeEstado.className = "status offline"; 
+            badgeEstado.className = "status offline";
         } else if (tieneAdvertencias) {
             badgeEstado.textContent = "● Alertas";
-            badgeEstado.className = "status warning"; 
+            badgeEstado.className = "status warning";
         } else {
             badgeEstado.textContent = "● Online";
-            badgeEstado.className = "status online";  
+            badgeEstado.className = "status online";
         }
 
         // Renderizar caja de alertas de tu base de datos
@@ -200,7 +206,7 @@ export async function inicializarDetalleEquipo() {
                     const item = document.createElement("div");
                     const claseLinea = al.gravedad === "Crítica" ? "warning-line" : "online-line";
                     const fecha = al.fecha_hora ? new Date(al.fecha_hora).toLocaleString('es-MX') : "Reciente";
-                    
+
                     item.className = `timeline-item ${claseLinea}`;
                     item.innerHTML = `
                         <strong>${fecha}</strong>

@@ -1,117 +1,83 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard SGATRU</title>
-  <link rel="stylesheet" href="../CSS/home.css">
-  <script type="module" src="../JS/home.js"></script>
-</head>
-<body>
+<header class="topbar">
+  <div>
+    <h1>Dashboard Principal</h1>
+    <p>Monitoreo general de activos y topología de red universitaria</p>
+  </div>
 
-  <aside class="sidebar">
-    <img src="../IMG/logo-uaemex.png" class="logo" alt="UAEMex">
-    <h2>SGATRU</h2>
+  <div class="user-box">
+    <span id="usuario-topbar">Administrador</span>
+    <button id="btn-logout">Cerrar sesión</button>
+  </div>
+</header>
 
-    <nav>
-      <a class="active" href="#">Dashboard</a>
-      <a href="campus.html">Campus</a>
-      <a href="edificio.html">Edificios</a>
-      <a href="inventario.html">Inventario</a>
-      <a href="aula.html">Aula/Laboratorio</a>
-      <a href="alertas.html">Alertas</a>
-      <a href="reportes.html">Reportes</a>
-      <a href="usuarios.html">Usuarios</a>
-    </nav>
-  </aside>
+<section class="cards">
 
-  <main class="main-content">
+  <div class="card">
+    <h3>Equipos Online</h3>
+    <p class="number green" id="dash-online">0</p>
+    <span>Dispositivos conectados</span>
+  </div>
 
-    <header class="topbar">
-      <div>
-        <h1>Dashboard Principal</h1>
-        <p>Monitoreo general de activos y topología de red universitaria</p>
+  <div class="card">
+    <h3>Equipos Offline</h3>
+    <p class="number red" id="dash-offline">0</p>
+    <span>Dispositivos sin conexión</span>
+  </div>
+
+  <div class="card">
+    <h3>Alertas Activas</h3>
+    <p class="number gold" id="dash-alertas">0</p>
+    <span>Incidencias pendientes</span>
+  </div>
+
+  <div class="card">
+    <h3>Switches</h3>
+    <p class="number blue" id="dash-switches">0</p>
+    <span>Equipos de red registrados</span>
+  </div>
+
+</section>
+
+<section class="content-grid">
+
+  <div class="panel">
+    <h2>Estado General de la Red</h2>
+
+    <div class="status-row">
+      <span>Conectividad</span>
+      <strong class="green" id="dash-status-red">Estable</strong>
+    </div>
+
+    <div class="status-row">
+      <span>Último escaneo</span>
+      <strong id="dash-ultimo-escaneo">Hace unos instantes</strong>
+    </div>
+
+    <div class="status-row">
+      <span>Inventario mapeado</span>
+      <strong class="gold" id="dash-porcentaje-inventario">0%</strong>
+    </div>
+
+    <div class="progress">
+      <div id="dash-barra-progreso" style="width: 0%;"></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Alertas Recientes</h2>
+    <div id="contenedor-alertas-recientes">
+
+      <div class="alert red-alert">
+        <strong>PC-LAB-03 desconectada</strong>
+        <p>Edificio A · Piso 1 · Laboratorio 2</p>
       </div>
 
-      <div class="user-box">
-        <span id="usuario-topbar">Administrador</span>
-        <button id="btn-logout">Cerrar sesión</button>
-      </div>
-    </header>
-
-    <section class="cards">
-
-      <div class="card">
-        <h3>Equipos Online</h3>
-        <p class="number green" id="dash-online">0</p>
-        <span>Dispositivos conectados</span>
+      <div class="alert gold-alert">
+        <strong>IP duplicada detectada</strong>
+        <p>192.168.1.25</p>
       </div>
 
-      <div class="card">
-        <h3>Equipos Offline</h3>
-        <p class="number red" id="dash-offline">0</p>
-        <span>Dispositivos sin conexión</span>
-      </div>
+    </div>
+  </div>
 
-      <div class="card">
-        <h3>Alertas Activas</h3>
-        <p class="number gold" id="dash-alertas">0</p>
-        <span>Incidencias pendientes</span>
-      </div>
-
-      <div class="card">
-        <h3>Switches</h3>
-        <p class="number blue" id="dash-switches">0</p>
-        <span>Equipos de red registrados</span>
-      </div>
-
-    </section>
-
-    <section class="content-grid">
-
-      <div class="panel">
-        <h2>Estado General de la Red</h2>
-
-        <div class="status-row">
-          <span>Conectividad</span>
-          <strong class="green" id="dash-status-red">Estable</strong>
-        </div>
-
-        <div class="status-row">
-          <span>Último escaneo</span>
-          <strong id="dash-ultimo-escaneo">Hace unos instantes</strong>
-        </div>
-
-        <div class="status-row">
-          <span>Inventario mapeado</span>
-          <strong class="gold" id="dash-porcentaje-inventario">0%</strong>
-        </div>
-
-        <div class="progress">
-          <div id="dash-barra-progreso" style="width: 0%;"></div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <h2>Alertas Recientes</h2>
-        <div id="contenedor-alertas-recientes">
-          
-          <div class="alert red-alert">
-            <strong>PC-LAB-03 desconectada</strong>
-            <p>Edificio A · Piso 1 · Laboratorio 2</p>
-          </div>
-
-          <div class="alert gold-alert">
-            <strong>IP duplicada detectada</strong>
-            <p>192.168.1.25</p>
-          </div>
-
-        </div>
-      </div>
-
-    </section>
-
-  </main>
-
-</body>
-</html>
+</section>

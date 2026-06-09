@@ -1,3 +1,10 @@
+(function protegerInterfaz() {
+    const sesionActiva = localStorage.getItem("sgatru_session");
+    if (!sesionActiva) {
+        window.location.href = "login.html"; // Redirige al login de inmediato
+    }
+})();
+
 import { get } from './api.js';
 
 export async function inicializarDashboard() {

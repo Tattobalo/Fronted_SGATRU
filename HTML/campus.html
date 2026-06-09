@@ -1,77 +1,38 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campus - SGATRU</title>
-    <link rel="stylesheet" href="../CSS/campus.css">
-    <script type="module" src="../JS/campus.js"></script>
-</head>
-<body>
+<header class="topbar">
+    <div>
+        <h1>Campus Universitario</h1>
+        <p>Visualización general de la infraestructura tecnológica</p>
+    </div>
 
-    <aside class="sidebar">
+    <div class="user-box">
+        <span>Administrador</span>
+    </div>
+</header>
 
-        <img src="../IMG/logo-uaemex.png" class="logo" alt="UAEMex">
+<section class="summary">
 
-        <h2>SGATRU</h2>
+    <div class="summary-card">
+        <h3>Activos Totales</h3>
+        <p>153</p>
+    </div>
 
-        <nav>
-            <a href="home.html">Dashboard</a>
-            <a class="active" href="#">Campus</a>
-            <a href="edificio.html">Edificios</a>
-            <a href="nivel.html">Piso</a>
-            <a href="edificio.html">Aula/Laboratorio</a>
-            <a href="inventario.html">Inventario</a>
-            <a href="alertas.html">Alertas</a>
-            <a href="reportes.html">Reportes</a>
-            <a href="usuarios.html">Usuarios</a>
-    </nav>
-        </nav>
+    <div class="summary-card">
+        <h3>Online</h3>
+        <p class="green">128</p>
+    </div>
 
-    </aside>
+    <div class="summary-card">
+        <h3>Offline</h3>
+        <p class="red">12</p>
+    </div>
 
-    <main class="main-content">
+    <div class="summary-card">
+        <h3>Alertas</h3>
+        <p class="gold">7</p>
+    </div>
 
-        <header class="topbar">
-            <div>
-                <h1>Campus Universitario</h1>
-                <p>Visualización general de la infraestructura tecnológica</p>
-            </div>
+</section>
 
-            <div class="user-box">
-                <span>Administrador</span>
-            </div>
-        </header>
-
-        <section class="summary">
-
-            <div class="summary-card">
-                <h3>Activos Totales</h3>
-                <p>153</p>
-            </div>
-
-            <div class="summary-card">
-                <h3>Online</h3>
-                <p class="green">128</p>
-            </div>
-
-            <div class="summary-card">
-                <h3>Offline</h3>
-                <p class="red">12</p>
-            </div>
-
-            <div class="summary-card">
-                <h3>Alertas</h3>
-                <p class="gold">7</p>
-            </div>
-
-        </section>
-
-        <section class="buildings" id="contenedor-edificios">
-            <p>Cargando edificios...</p>
-        </section>
-
-    </main>
-
-</body>
-</html>
+<section class="buildings" id="contenedor-edificios">
+    <p>Cargando edificios...</p>
+</section>

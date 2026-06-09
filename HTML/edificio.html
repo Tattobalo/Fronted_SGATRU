@@ -1,71 +1,36 @@
-<!DOCTYPE html>
-<html lang="es">
+<header class="topbar">
+  <div>
+    <h1 id="nombre-edificio">Cargando Edificio...</h1>
+    <p>Gestión de pisos, aulas, switches y activos conectados</p>
+  </div>
+  <div class="user-box">
+    <span>Administrador</span>
+  </div>
+</header>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edificio - SGATRU</title>
-  <link rel="stylesheet" href="../CSS/edificio.css">
-  <script type="module" src="../JS/edificio.js"></script>
-</head>
+<section class="building-info">
+  <div class="info-card">
+    <h3>Pisos</h3>
+    <p id="stat-pisos">-</p>
+  </div>
+  <div class="info-card">
+    <h3>Aulas</h3>
+    <p id="stat-aulas">-</p>
+  </div>
+  <div class="info-card">
+    <h3>Activos</h3>
+    <p id="stat-activos">-</p>
+  </div>
+  <div class="info-card">
+    <h3>Alertas</h3>
+    <p class="gold" id="stat-alertas">-</p>
+  </div>
+</section>
 
-<body>
+<section class="floors-section">
+    <h2>Distribución del Edificio</h2>
 
-  <aside class="sidebar">
-    <img src="../IMG/logo-uaemex.png" class="logo" alt="UAEMex">
-    <h2>SGATRU</h2>
-
-    <nav>
-      <a href="home.html">Dashboard</a>
-      <a href="campus.html">Campus</a>
-      <a class="active" href="#">Edificios</a>
-      <a href="nivel.html">Piso</a>
-      <a href="aula.html">Aula/Laboratorio</a>
-      <a href="inventario.html">Inventario</a>
-      <a href="alertas.html">Alertas</a>
-    </nav>
-  </aside>
-
-  <main class="main-content">
-
-    <header class="topbar">
-      <div>
-        <h1 id="nombre-edificio">Cargando Edificio...</h1>
-        <p>Gestión de pisos, aulas, switches y activos conectados</p>
-      </div>
-      <div class="user-box">
-        <span>Administrador</span>
-      </div>
-    </header>
-
-    <section class="building-info">
-      <div class="info-card">
-        <h3>Pisos</h3>
-        <p id="stat-pisos">-</p>
-      </div>
-      <div class="info-card">
-        <h3>Aulas</h3>
-        <p id="stat-aulas">-</p>
-      </div>
-      <div class="info-card">
-        <h3>Activos</h3>
-        <p id="stat-activos">-</p>
-      </div>
-      <div class="info-card">
-        <h3>Alertas</h3>
-        <p class="gold" id="stat-alertas">-</p>
-      </div>
-    </section>
-
-    <section class="floors-section">
-      <h2>Distribución del Edificio</h2>
-      <div class="floors-grid" id="contenedor-pisos">
-        <p>Cargando distribución de infraestructura...</p>
-      </div>
-    </section>
-
-  </main>
-
-</body>
-
-</html>
+    <div class="floors-grid" id="contenedor-pisos">
+        <p>Cargando pisos...</p>
+    </div>
+</section>

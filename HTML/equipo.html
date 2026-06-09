@@ -1,166 +1,132 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Equipo - SGATRU</title>
-  <link rel="stylesheet" href="../CSS/equipo.css">
-  <script type="module" src="../JS/equipo.js"></script>
-</head>
-<body>
+<header class="topbar">
+  <div>
+    <h1 id="eq-titulo-hostname">Cargando...</h1>
+    <p id="eq-ubicacion-subtitulo">Ubicación · Monitoreo de activos</p>
+  </div>
 
-  <aside class="sidebar">
-    <img src="../IMG/logo-uaemex.png" class="logo" alt="UAEMex">
-    <h2>SGATRU</h2>
+  <div class="status-box">
+    <span class="status online" id="eq-badge-estado">● Leyendo estado...</span>
+  </div>
+</header>
 
-    <nav>
-      <a href="home.html">Dashboard</a>
-      <a href="campus.html">Campus</a>
-      <a href="edificio.html">Edificios</a>
-      <a href="nivel.html">Piso</a>
-      <a href="aula.html">Aula/Laboratorio</a>
-      <!-- <a class="active" href="#">Equipo</a> -->
-      <a href="inventario.html">Inventario</a>
-      <a href="alertas.html">Alertas</a>
-    </nav>
-  </aside>
+<section class="quick-info">
 
-  <main class="main-content">
+  <div class="quick-card">
+    <h3>IP</h3>
+    <p id="eq-quick-ip">-</p>
+  </div>
 
-    <header class="topbar">
+  <div class="quick-card">
+    <h3>MAC</h3>
+    <p id="eq-quick-mac">-</p>
+  </div>
+
+  <div class="quick-card">
+    <h3>Puerto</h3>
+    <p id="eq-quick-puerto">-</p>
+  </div>
+
+  <div class="quick-card">
+    <h3>Última conexión</h3>
+    <p>Reciente</p>
+  </div>
+
+</section>
+
+<section class="details-grid">
+
+  <div class="panel">
+    <h2>Información de Red</h2>
+
+    <div class="data-row">
+      <span>Hostname</span>
+      <strong id="eq-det-hostname">-</strong>
+    </div>
+
+    <div class="data-row">
+      <span>Dirección IP</span>
+      <strong id="eq-det-ip">-</strong>
+    </div>
+
+    <div class="data-row">
+      <span>MAC Address</span>
+      <strong id="eq-det-mac">-</strong>
+    </div>
+
+    <div class="data-row">
+      <span>Switch</span>
+      <strong id="eq-det-switch">-</strong>
+    </div>
+
+    <div class="data-row">
+      <span>Puerto físico</span>
+      <strong id="eq-det-puertonombre">-</strong>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Ubicación Física</h2>
+
+    <div class="data-row">
+      <span>Campus</span>
+      <strong id="eq-det-campus">CU Tianguistenco</strong>
+    </div>
+
+    <div class="data-row">
+      <span>Edificio</span>
+      <strong id="eq-det-edificio">Edificio A</strong>
+    </div>
+
+    <div class="data-row">
+      <span>Piso</span>
+      <strong id="eq-det-piso">-</strong>
+    </div>
+
+    <div class="data-row">
+      <span>Espacio</span>
+      <strong id="eq-det-espacio">-</strong>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Responsable Asignado</h2>
+
+    <div class="responsable-card">
+      <div class="avatar" id="eq-resp-avatar">--</div>
+
       <div>
-        <h1 id="eq-titulo-hostname">Cargando...</h1>
-        <p id="eq-ubicacion-subtitulo">Ubicación · Monitoreo de activos</p>
+        <h3 id="eq-resp-nombre">Cargando responsable...</h3>
+        <span id="eq-resp-correo">-</span>
       </div>
+    </div>
 
-      <div class="status-box">
-        <span class="status online" id="eq-badge-estado">● Leyendo estado...</span>
+    <div class="data-row">
+      <span>Contacto</span>
+      <strong id="eq-resp-telefono">-</strong>
+    </div>
+  </div>
+
+</section>
+
+<section class="bottom-grid">
+
+  <div class="panel">
+    <h2>Historial de Conexión</h2>
+    <div class="timeline" id="contenedor-timeline-equipo">
+      <div class="timeline-item online-line">
+        <p>Cargando historial...</p>
       </div>
-    </header>
+    </div>
+  </div>
 
-    <section class="quick-info">
-
-      <div class="quick-card">
-        <h3>IP</h3>
-        <p id="eq-quick-ip">-</p>
+  <div class="panel">
+    <h2>Alertas Asociadas</h2>
+    <div id="contenedor-alertas-equipo">
+      <div class="alert green-alert">
+        <p>Buscando incidencias...</p>
       </div>
+    </div>
+    <button class="report-btn">Generar reporte del equipo</button>
+  </div>
 
-      <div class="quick-card">
-        <h3>MAC</h3>
-        <p id="eq-quick-mac">-</p>
-      </div>
-
-      <div class="quick-card">
-        <h3>Puerto</h3>
-        <p id="eq-quick-puerto">-</p>
-      </div>
-
-      <div class="quick-card">
-        <h3>Última conexión</h3>
-        <p>Reciente</p>
-      </div>
-
-    </section>
-
-    <section class="details-grid">
-
-      <div class="panel">
-        <h2>Información de Red</h2>
-
-        <div class="data-row">
-          <span>Hostname</span>
-          <strong id="eq-det-hostname">-</strong>
-        </div>
-
-        <div class="data-row">
-          <span>Dirección IP</span>
-          <strong id="eq-det-ip">-</strong>
-        </div>
-
-        <div class="data-row">
-          <span>MAC Address</span>
-          <strong id="eq-det-mac">-</strong>
-        </div>
-
-        <div class="data-row">
-          <span>Switch</span>
-          <strong id="eq-det-switch">-</strong>
-        </div>
-
-        <div class="data-row">
-          <span>Puerto físico</span>
-          <strong id="eq-det-puertonombre">-</strong>
-        </div>
-      </div>
-
-      <div class="panel">
-        <h2>Ubicación Física</h2>
-
-        <div class="data-row">
-          <span>Campus</span>
-          <strong id="eq-det-campus">CU Tianguistenco</strong>
-        </div>
-
-        <div class="data-row">
-          <span>Edificio</span>
-          <strong id="eq-det-edificio">Edificio A</strong>
-        </div>
-
-        <div class="data-row">
-          <span>Piso</span>
-          <strong id="eq-det-piso">-</strong>
-        </div>
-
-        <div class="data-row">
-          <span>Espacio</span>
-          <strong id="eq-det-espacio">-</strong>
-        </div>
-      </div>
-
-      <div class="panel">
-        <h2>Responsable Asignado</h2>
-
-        <div class="responsable-card">
-          <div class="avatar" id="eq-resp-avatar">--</div>
-
-          <div>
-            <h3 id="eq-resp-nombre">Cargando responsable...</h3>
-            <span id="eq-resp-correo">-</span>
-          </div>
-        </div>
-
-        <div class="data-row">
-          <span>Contacto</span>
-          <strong id="eq-resp-telefono">-</strong>
-        </div>
-      </div>
-
-    </section>
-
-    <section class="bottom-grid">
-
-      <div class="panel">
-        <h2>Historial de Conexión</h2>
-        <div class="timeline" id="contenedor-timeline-equipo">
-          <div class="timeline-item online-line">
-            <p>Cargando historial...</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <h2>Alertas Asociadas</h2>
-        <div id="contenedor-alertas-equipo">
-          <div class="alert green-alert">
-            <p>Buscando incidencias...</p>
-          </div>
-        </div>
-        <button class="report-btn">Generar reporte del equipo</button>
-      </div>
-
-    </section>
-
-  </main>
-
-</body>
-</html>
+</section>

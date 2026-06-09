@@ -1,103 +1,65 @@
-<!DOCTYPE html>
-<html lang="es">
+<header class="topbar">
+  <div>
+    <h1>Inventario de Activos</h1>
+    <p>Registro general de equipos, red, responsables y ubicación física</p>
+  </div>
+  <a href="#/nuevoActivo" data-link class="add-btn">
+    + Nuevo activo
+  </a>
+</header>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inventario de Activos - SGATRU</title>
-  <link rel="stylesheet" href="../CSS/inventario.css">
-  <script type="module" src="../JS/inventario.js"></script>
-</head>
+<section class="inventory-summary">
+  <div class="summary-card">
+    <h3>Total activos</h3>
+    <p id="total-activos">-</p>
+  </div>
+  <div class="summary-card">
+    <h3>Online</h3>
+    <p class="green" id="total-online">-</p>
+  </div>
+  <div class="summary-card">
+    <h3>Offline</h3>
+    <p class="red" id="total-offline">-</p>
+  </div>
+  <div class="summary-card">
+    <h3>Intermitentes</h3>
+    <p class="gold" id="total-intermitentes">-</p>
+  </div>
+</section>
 
-<body>
+<section class="filters">
+  <input type="text" id="buscar-activo" placeholder="Buscar por equipo, IP, MAC o responsable...">
+  <select id="filtro-estado-activo">
+    <option value="">Todos los estados</option>
+    <option value="Online">Online</option>
+    <option value="Offline">Offline</option>
+    <option value="Intermitente">Intermitente</option>
+  </select>
+  <select id="filtro-edificio-activo">
+    <option value="">Todos los edificios</option>
+  </select>
+  <button id="btn-filtrar-activo">Filtrar</button>
+</section>
 
-  <aside class="sidebar">
-    <img src="../IMG/logo-uaemex.png" class="logo" alt="UAEMex">
-    <h2>SGATRU</h2>
+<section class="table-section">
+  <div class="table-header">
+    <h2>Listado de Activos</h2>
+    <button class="export-btn" id="btn-exportar">Exportar</button>
+  </div>
 
-    <nav>
-      <a href="home.html">Dashboard</a>
-      <a href="campus.html">Campus</a>
-      <a href="edificio.html">Edificios</a>
-      <a href="nivel.html">Piso</a>
-      <a href="aula.html">Aula/Laboratorio</a>
-      <!-- <a href="equipo.html">Equipo</a> -->
-      <a class="active" href="#">Inventario</a>
-      <a href="alertas.html">Alertas</a>
-      <a href="reportes.html">Reportes</a>
-    </nav>
-  </aside>
-
-  <main class="main-content">
-
-    <header class="topbar">
-      <div>
-        <h1>Inventario de Activos</h1>
-        <p>Registro general de equipos, red, responsables y ubicación física</p>
-      </div>
-      <a href="#/nuevoActivo" data-link class="add-btn">
-        + Nuevo activo
-      </a>
-    </header>
-
-    <section class="inventory-summary">
-      <div class="summary-card">
-        <h3>Total activos</h3>
-        <p id="total-activos">-</p>
-      </div>
-      <div class="summary-card">
-        <h3>Online</h3>
-        <p class="green" id="total-online">-</p>
-      </div>
-      <div class="summary-card">
-        <h3>Offline</h3>
-        <p class="red" id="total-offline">-</p>
-      </div>
-      <div class="summary-card">
-        <h3>Intermitentes</h3>
-        <p class="gold" id="total-intermitentes">-</p>
-      </div>
-    </section>
-
-    <section class="filters">
-      <input type="text" id="buscar-activo" placeholder="Buscar por equipo, IP, MAC o responsable...">
-      <select id="filtro-estado-activo">
-        <option value="">Todos los estados</option>
-        <option value="Online">Online</option>
-        <option value="Offline">Offline</option>
-        <option value="Intermitente">Intermitente</option>
-      </select>
-      <select id="filtro-edificio-activo">
-        <option value="">Todos los edificios</option>
-      </select>
-      <button id="btn-filtrar-activo">Filtrar</button>
-    </section>
-
-    <section class="table-section">
-      <div class="table-header">
-        <h2>Listado de Activos</h2>
-        <button class="export-btn" id="btn-exportar">Exportar</button>
-      </div>
-
-      <table id="tabla-inventario">
-        <thead>
-          <tr>
-            <th>Equipo (Hostname)</th>
-            <th>Dirección IP</th>
-            <th>Dirección MAC</th>
-            <th>Ubicación Asignada</th>
-            <th>Responsable</th>
-            <th>Estado</th>
-            <th>Acción</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-    </section>
-
-  </main>
-
-</body>
-
-</html>
+  <table id="tabla-inventario">
+    <thead>
+      <tr>
+        <th>Equipo (Hostname)</th>
+        <th>Dirección IP</th>
+        <th>Dirección MAC</th>
+        <th>Ubicación Asignada</th>
+        <th>Responsable</th>
+        <th>Estado</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</section>

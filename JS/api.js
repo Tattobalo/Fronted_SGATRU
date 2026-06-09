@@ -2,8 +2,8 @@
 // a la dirección del servidor donde se aloje la API. 
 // En este caso, se asume que la API está alojada localmente 
 // en el puerto 8000.
-export const API_URL = "http://127.0.0.1:8000";
-//export const API_URL = "https://flf80jw7-8000.usw3.devtunnels.ms/";
+//export const API_URL = "http://127.0.0.1:8000";
+export const API_URL = "https://flf80jw7-8000.usw3.devtunnels.ms/";
 
 // Función global para enviar datos (POST)
 export async function post(endpoint, data) {
@@ -29,15 +29,44 @@ export async function post(endpoint, data) {
 }
 
 export async function get(endpoint) {
-    // 1. Limpiar el endpoint para que no empiece con '/'
-    const rutaLimpia = endpoint.startsWith('/') ? endpoint.slice(1) : endpoint;
-    
-    // CORRECCIÓN CLAVE: Agregamos la barra '/' en medio de la URL base y la ruta limpia
-    const urlDestino = `${API_URL.replace(/\/$/, "")}/${rutaLimpia}`;
-    
-    const response = await fetch(urlDestino);
-    if (!response.ok) throw new Error(`Error al obtener datos de: ${endpoint}`);
-    return await response.json();
+
+    const rutaLimpia = endpoint.startsWith('/')
+        ? endpoint.slice(1)
+        : endpoint;
+
+    const urlDestino =
+        `${API_URL.replace(/\/$/, "")}/${rutaLimpia}`;
+
+    console.log("Consultando:", urlDestino);
+
+    try {
+
+        const response = await fetch(urlDestino);
+
+        console.log("Status:", response.status);
+
+        if (!response.ok) {
+            throw new Error(
+                `Error ${response.status} en ${urlDestino}`
+            );
+        }
+
+        const data = await response.json();
+
+        console.log("Respuesta:", data);
+
+        return data;
+
+    } catch (error) {
+
+        console.error(
+            "FALLO FETCH:",
+            urlDestino,
+            error
+        );
+
+        throw error;
+    }
 }
 
 export async function del(endpoint) {

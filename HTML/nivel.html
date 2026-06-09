@@ -1,74 +1,40 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nivel - SGATRU</title>
-  <link rel="stylesheet" href="../CSS/nivel.css">
-  <script type="module" src="../JS/nivel.js"></script>
-</head>
-<body>
+<header class="topbar">
+  <div>
+    <h1 id="texto-encabezado-piso">Cargando Nivel...</h1>
+    <p>Distribución de aulas, laboratorios y activos tecnológicos</p>
+  </div>
 
-  <aside class="sidebar">
-    <img src="../IMG/logo-uaemex.png" class="logo" alt="UAEMex">
-    <h2>SGATRU</h2>
+  <div class="user-box">
+    <span>Administrador</span>
+  </div>
+</header>
 
-    <nav>
-      <a href="home.html">Dashboard</a>
-      <a href="campus.html">Campus</a>
-      <a href="edificio.html">Edificios</a>
-      <a class="active" href="#">Piso</a>
-      <a href="aula.html">Aula/Laboratorio</a>
-      <a href="inventario.html">Inventario</a>
-      <a href="alertas.html">Alertas</a>
-      <a href="#">Reportes</a>
-    </nav>
-  </aside>
+<section class="floor-summary">
+  <div class="summary-card">
+    <h3>Aulas</h3>
+    <p id="stat-piso-aulas">-</p>
+  </div>
 
-  <main class="main-content">
+  <div class="summary-card">
+    <h3>Activos</h3>
+    <p id="stat-piso-activos">-</p>
+  </div>
 
-    <header class="topbar">
-      <div>
-        <h1 id="texto-encabezado-piso">Cargando Nivel...</h1>
-        <p>Distribución de aulas, laboratorios y activos tecnológicos</p>
-      </div>
+  <div class="summary-card">
+    <h3>Switches</h3>
+    <p id="stat-piso-switches">-</p>
+  </div>
 
-      <div class="user-box">
-        <span>Administrador</span>
-      </div>
-    </header>
+  <div class="summary-card">
+    <h3>Alertas</h3>
+    <p class="gold" id="stat-piso-alertas">-</p>
+  </div>
+</section>
 
-    <section class="floor-summary">
-      <div class="summary-card">
-        <h3>Aulas</h3>
-        <p id="stat-piso-aulas">-</p>
-      </div>
+<section class="floor-map">
+  <h2>Mapa del Piso</h2>
 
-      <div class="summary-card">
-        <h3>Activos</h3>
-        <p id="stat-piso-activos">-</p>
-      </div>
-
-      <div class="summary-card">
-        <h3>Switches</h3>
-        <p id="stat-piso-switches">-</p>
-      </div>
-
-      <div class="summary-card">
-        <h3>Alertas</h3>
-        <p class="gold" id="stat-piso-alertas">-</p>
-      </div>
-    </section>
-
-    <section class="floor-map">
-      <h2>Mapa del Piso</h2>
-
-      <div class="map-container" id="contenedor-mapa-aulas">
-          <p style="text-align: center; grid-column: 1/-1; color: #666;">Cargando espacios físicos del nivel...</p>
-      </div>
-    </section>
-
-  </main>
-
-</body>
-</html>
+  <div class="map-container" id="contenedor-mapa-aulas">
+    <p style="text-align: center; grid-column: 1/-1; color: #666;">Cargando espacios físicos del nivel...</p>
+  </div>
+</section>

@@ -1,96 +1,60 @@
-<!DOCTYPE html>
-<html lang="es">
+<header class="topbar">
+  <div>
+    <h1 id="nombre-aula">Cargando Aula...</h1>
+    <p id="ubicacion-jerarquia">Edificio · Piso · Monitoreo de activos</p>
+  </div>
+  <div class="user-box">
+    <span>Administrador</span>
+  </div>
+</header>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aula / Laboratorio - SGATRU</title>
-  <link rel="stylesheet" href="../CSS/aula.css">
-  <script type="module" src="../JS/aula.js"></script>
-</head>
+<section class="lab-summary">
+  <div class="summary-card">
+    <h3>Dispositivos</h3>
+    <p id="aula-total-equipos">-</p>
+  </div>
+  <div class="summary-card">
+    <h3>Online</h3>
+    <p class="green" id="aula-equipos-online">-</p>
+  </div>
+  <div class="summary-card">
+    <h3>Offline</h3>
+    <p class="red" id="aula-equipos-offline">-</p>
+  </div>
+  <div class="summary-card">
+    <h3>Intermitentes</h3>
+    <p class="gold" id="aula-equipos-warning">-</p>
+  </div>
+</section>
 
-<body>
+<section class="lab-layout">
+  <div class="layout-header">
+    <h2>Plano del Laboratorio / Aula</h2>
+    <div class="legend">
+      <span><b class="dot green-bg"></b> Online</span>
+      <span><b class="dot gold-bg"></b> Intermitente</span>
+      <span><b class="dot red-bg"></b> Offline</span>
+    </div>
+  </div>
 
-  <aside class="sidebar">
-    <img src="../IMG/logo-uaemex.png" class="logo" alt="UAEMex">
-    <h2>SGATRU</h2>
+  <div class="lab-map" id="mapa-interactivo-aula">
+  </div>
+</section>
 
-    <nav>
-      <a href="home.html">Dashboard</a>
-      <a href="campus.html">Campus</a>
-      <a href="edificio.html">Edificios</a>
-      <a href="nivel.html">Piso</a>
-      <a class="active" href="#">Aula/Laboratorio</a>
-      <a href="inventario.html">Inventario</a>
-      <a href="alertas.html">Alertas</a>
-    </nav>
-  </aside>
-
-  <main class="main-content">
-
-    <header class="topbar">
-      <div>
-        <h1 id="nombre-aula">Cargando Aula...</h1>
-        <p id="ubicacion-jerarquia">Edificio · Piso · Monitoreo de activos</p>
-      </div>
-      <div class="user-box">
-        <span>Administrador</span>
-      </div>
-    </header>
-
-    <section class="lab-summary">
-      <div class="summary-card">
-        <h3>Dispositivos</h3>
-        <p id="aula-total-equipos">-</p>
-      </div>
-      <div class="summary-card">
-        <h3>Online</h3>
-        <p class="green" id="aula-equipos-online">-</p>
-      </div>
-      <div class="summary-card">
-        <h3>Offline</h3>
-        <p class="red" id="aula-equipos-offline">-</p>
-      </div>
-      <div class="summary-card">
-        <h3>Intermitentes</h3>
-        <p class="gold" id="aula-equipos-warning">-</p>
-      </div>
-    </section>
-
-    <section class="lab-layout">
-      <div class="layout-header">
-        <h2>Plano del Laboratorio / Aula</h2>
-        <div class="legend">
-          <span><b class="dot green-bg"></b> Online</span>
-          <span><b class="dot gold-bg"></b> Intermitente</span>
-          <span><b class="dot red-bg"></b> Offline</span>
-        </div>
-      </div>
-
-      <div class="lab-map" id="mapa-interactivo-aula">
-      </div>
-    </section>
-
-    <section class="asset-table-section">
-      <h2>Detalle de Activos del Espacio</h2>
-      <table id="tabla-detalle-aula">
-        <thead>
-          <tr>
-            <th>Equipo (Hostname)</th>
-            <th>Dirección IP</th>
-            <th>Dirección MAC</th>
-            <th>Responsable Directo</th>
-            <th>Puerto Switch</th>
-            <th>Estado Actual</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-    </section>
-
-  </main>
-
-</body>
-
-</html>
+<section class="asset-table-section">
+  <h2>Detalle de Activos del Espacio</h2>
+  <table id="tabla-detalle-aula">
+    <thead>
+      <tr>
+        <th>Equipo (Hostname)</th>
+        <th>Dirección IP</th>
+        <th>Dirección MAC</th>
+        <th>Responsable Directo</th>
+        <th>Puerto Switch</th>
+        <th>Estado Actual</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</section>

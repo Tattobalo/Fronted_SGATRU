@@ -1,168 +1,273 @@
-<!DOCTYPE html>
-<html lang="es">
+<header class="topbar">
+  <div>
+    <h1>Gestión de Usuarios</h1>
+    <p>Administración de cuentas, roles y permisos del sistema</p>
+  </div>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Usuarios - SGATRU</title>
-  <link rel="stylesheet" href="../CSS/usuarios.css">
-  <script type="module" src="../JS/usuarios.js"></script>
-</head>
+  <a href="#/nuevoUsuario" data-link class="add-btn">
+    + Nuevo usuario
+  </a>
+</header>
 
-<body>
+<section class="user-summary">
+  <div class="summary-card">
+    <h3>Total usuarios</h3>
+    <p id="resumen-total-usuarios">-</p>
+  </div>
 
-  <aside class="sidebar">
-    <img src="../IMG/logo-uaemex.png" class="logo" alt="UAEMex">
-    <h2>SGATRU</h2>
+  <div class="summary-card">
+    <h3>Administradores</h3>
+    <p class="green" id="resumen-admins">-</p>
+  </div>
 
-    <nav>
-      <a href="home.html">Dashboard</a>
-      <a href="campus.html">Campus</a>
-      <a href="edificio.html">Edificios</a>
-      <a href="topologia.html">Topología</a>
-      <a href="inventario.html">Inventario</a>
-      <a href="alertas.html">Alertas</a>
-      <a href="reportes.html">Reportes</a>
-      <a class="active" href="#">Usuarios</a>
-    </nav>
-  </aside>
+  <div class="summary-card">
+    <h3>Responsables</h3>
+    <p class="gold" id="resumen-responsables">-</p>
+  </div>
 
-  <main class="main-content">
+  <div class="summary-card">
+    <h3>Consulta</h3>
+    <p id="resumen-consulta">-</p>
+  </div>
+</section>
 
-    <header class="topbar">
-      <div>
-        <h1>Gestión de Usuarios</h1>
-        <p>Administración de cuentas, roles y permisos del sistema</p>
-      </div>
-      <a href="#/nuevoUsuario" data-link class="add-btn">
-        + Nuevo usuario
-      </a>
-    </header>
+<section class="roles-section">
+  <h2>Roles del Sistema</h2>
 
-    <section class="user-summary">
-      <div class="summary-card">
-        <h3>Total usuarios</h3>
-        <p id="resumen-total-usuarios">-</p>
-      </div>
+  <div class="roles-grid">
+    <div class="role-card admin">
+      <h3>Administrador de Red</h3>
+      <p>
+        Acceso total al sistema, configuración de escaneos,
+        gestión de usuarios y topología.
+      </p>
+    </div>
 
-      <div class="summary-card">
-        <h3>Administradores</h3>
-        <p class="green" id="resumen-admins">-</p>
-      </div>
+    <div class="role-card responsable">
+      <h3>Responsable de Área</h3>
+      <p>
+        Gestión de activos físicos dentro del edificio,
+        piso o laboratorio asignado.
+      </p>
+    </div>
 
-      <div class="summary-card">
-        <h3>Responsables</h3>
-        <p class="gold" id="resumen-responsables">-</p>
-      </div>
+    <div class="role-card auxiliar">
+      <h3>Auxiliar de Inventario</h3>
+      <p>
+        Registro, actualización y validación de información
+        de hardware.
+      </p>
+    </div>
 
-      <div class="summary-card">
-        <h3>Consulta</h3>
-        <p id="resumen-consulta">-</p>
-      </div>
-    </section>
+    <div class="role-card consulta">
+      <h3>Usuario de Consulta</h3>
+      <p>
+        Acceso de solo lectura a mapas, estados de equipos
+        y reportes básicos.
+      </p>
+    </div>
+  </div>
+</section>
 
-    <section class="roles-section">
-      <h2>Roles del Sistema</h2>
-      <div class="roles-grid">
-        <div class="role-card admin">
-          <h3>Administrador de Red</h3>
-          <p>Acceso total al sistema, configuración de escaneos, gestión de usuarios y topología.</p>
-        </div>
-        <div class="role-card responsable">
-          <h3>Responsable de Área</h3>
-          <p>Gestión de activos físicos dentro del edificio, piso o laboratorio asignado.</p>
-        </div>
-        <div class="role-card auxiliar">
-          <h3>Auxiliar de Inventario</h3>
-          <p>Registro, actualización y validación de información de hardware.</p>
-        </div>
-        <div class="role-card consulta">
-          <h3>Usuario de Consulta</h3>
-          <p>Acceso de solo lectura a mapas, estados de equipos y reportes básicos.</p>
-        </div>
-      </div>
-    </section>
+<section class="filters">
+  <input
+    type="text"
+    id="filtro-busqueda"
+    placeholder="Buscar por nombre, correo o rol..."
+  >
 
-    <section class="filters">
-      <input type="text" id="filtro-busqueda" placeholder="Buscar por nombre, correo o rol...">
-      <select id="filtro-rol">
-        <option value="">Todos los roles</option>
+  <select id="filtro-rol">
+    <option value="">Todos los roles</option>
+    <option value="Administrador de Red">Administrador de Red</option>
+    <option value="Responsable de Área">Responsable de Área</option>
+    <option value="Auxiliar de Inventario">Auxiliar de Inventario</option>
+    <option value="Usuario de Consulta">Usuario de Consulta</option>
+  </select>
+
+  <select id="filtro-estado">
+    <option value="">Todos los estados</option>
+    <option value="true">Activo</option>
+    <option value="false">Inactivo</option>
+  </select>
+
+  <button id="btn-filtrar-usuarios">
+    Filtrar
+  </button>
+</section>
+
+<section class="table-section">
+  <h2>Listado de Usuarios</h2>
+
+  <table id="tabla-usuarios">
+    <thead>
+      <tr>
+        <th>Usuario / Nombre</th>
+        <th>Nombre de usuario</th>
+        <th>Rol</th>
+        <th>Cargo</th>
+        <th>Estado</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+
+    <tbody>
+    </tbody>
+  </table>
+</section>
+
+<div
+  id="modal-editar-usuario"
+  style="
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.5);
+    z-index:1000;
+    justify-content:center;
+    align-items:center;
+  "
+>
+  <div
+    style="
+      background:#fff;
+      padding:25px;
+      border-radius:8px;
+      width:420px;
+      box-shadow:0 4px 15px rgba(0,0,0,0.2);
+      text-align:left;
+      font-family:sans-serif;
+    "
+  >
+    <h3
+      style="
+        color:#005b2e;
+        margin-top:0;
+        margin-bottom:15px;
+        font-size:18px;
+      "
+    >
+      Actualizar Información del Responsable
+    </h3>
+
+    <form id="form-editar-usuario">
+
+      <input type="hidden" id="edit-user-id">
+
+      <label
+        style="
+          display:block;
+          font-weight:bold;
+          margin-bottom:5px;
+          font-size:13px;
+          color:#333;
+        "
+      >
+        Nombre Completo
+      </label>
+
+      <input
+        type="text"
+        id="edit-user-nombre"
+        required
+        style="
+          width:100%;
+          padding:8px;
+          margin-bottom:15px;
+          border:1px solid #ccc;
+          border-radius:4px;
+          box-sizing:border-box;
+        "
+      >
+
+      <label
+        style="
+          display:block;
+          font-weight:bold;
+          margin-bottom:5px;
+          font-size:13px;
+          color:#333;
+        "
+      >
+        Cargo / Descripción
+      </label>
+
+      <input
+        type="text"
+        id="edit-user-cargo"
+        style="
+          width:100%;
+          padding:8px;
+          margin-bottom:15px;
+          border:1px solid #ccc;
+          border-radius:4px;
+          box-sizing:border-box;
+        "
+      >
+
+      <label
+        style="
+          display:block;
+          font-weight:bold;
+          margin-bottom:5px;
+          font-size:13px;
+          color:#333;
+        "
+      >
+        Rol del Sistema
+      </label>
+
+      <select
+        id="edit-user-rol"
+        style="
+          width:100%;
+          padding:8px;
+          margin-bottom:20px;
+          border:1px solid #ccc;
+          border-radius:4px;
+          box-sizing:border-box;
+        "
+      >
         <option value="Administrador de Red">Administrador de Red</option>
         <option value="Responsable de Área">Responsable de Área</option>
         <option value="Auxiliar de Inventario">Auxiliar de Inventario</option>
         <option value="Usuario de Consulta">Usuario de Consulta</option>
       </select>
-      <select id="filtro-estado">
-        <option value="">Todos los estados</option>
-        <option value="true">Activo</option>
-        <option value="false">Inactivo</option>
-      </select>
-      <button id="btn-filtrar-usuarios">Filtrar</button>
-    </section>
 
-    <section class="table-section">
-      <h2>Listado de Usuarios</h2>
-      <table id="tabla-usuarios">
-        <thead>
-          <tr>
-            <th>Usuario / Nombre</th>
-            <th>Nombre de usuario</th>
-            <th>Rol</th>
-            <th>Cargo</th>
-            <th>Estado</th>
-            <th>Acción</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-    </section>
+      <input type="hidden" id="edit-user-correo">
 
-  </main>
+      <div
+        style="
+          display:flex;
+          justify-content:flex-end;
+          gap:10px;
+        "
+      >
+        <button
+          type="button"
+          id="btn-cancelar-edicion"
+        >
+          Cancelar
+        </button>
 
-  <div id="modal-editar-usuario"
-    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
-    <div
-      style="background: #fff; padding: 25px; border-radius: 8px; width: 420px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); text-align: left; font-family: sans-serif;">
-      <h3 style="color: #005b2e; margin-top: 0; margin-bottom: 15px; font-size: 18px;">Actualizar Información del
-        Responsable</h3>
+        <button
+          type="submit"
+          style="
+            background:#005b2e;
+            color:white;
+            border:none;
+            padding:8px 15px;
+            border-radius:4px;
+            cursor:pointer;
+            font-weight:bold;
+          "
+        >
+          Guardar Cambios
+        </button>
+      </div>
 
-      <form id="form-editar-usuario">
-        <input type="hidden" id="edit-user-id">
-
-        <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 13px; color: #333;">Nombre
-          Completo</label>
-        <input type="text" id="edit-user-nombre" required
-          style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-
-        <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 13px; color: #333;">Cargo /
-          Descripción</label>
-        <input type="text" id="edit-user-cargo"
-          style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-
-        <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 13px; color: #333;">Rol del
-          Sistema</label>
-        <select id="edit-user-rol"
-          style="width: 100%; padding: 8px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-          <option value="Administrador de Red">Administrador de Red</option>
-          <option value="Responsable de Área">Responsable de Área</option>
-          <option value="Auxiliar de Inventario">Auxiliar de Inventario</option>
-          <option value="Usuario de Consulta">Usuario de Consulta</option>
-        </select>
-
-        <input type="hidden" id="edit-user-correo">
-
-        <div style="display: flex; justify-content: flex-end; gap: 10px;">
-          <button type="button" id="btn-cancelar-edicion">
-            Cancelar
-          </button>
-          <button type="submit"
-            style="background: #005b2e; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">Guardar
-            Cambios</button>
-        </div>
-      </form>
-    </div>
+    </form>
   </div>
-
-</body>
-
-</html>
+</div>

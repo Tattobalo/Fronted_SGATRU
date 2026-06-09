@@ -2,7 +2,7 @@
 (function protegerInterfaz() {
     const sesionActiva = localStorage.getItem("sgatru_session");
     if (!sesionActiva) {
-        window.location.href = "../login.html"; // Redirige al login de inmediato
+        window.location.href = "login.html"; // Redirige al login de inmediato
     }
 })();
 
