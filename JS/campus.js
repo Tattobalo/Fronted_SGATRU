@@ -6,7 +6,7 @@
 })();
 
 import { get } from './api.js';
-import { navegarA } from './router.js'; // <-- Importamos el navegador SPA
+import { navegarA } from './router.js';
 
 export async function renderizarEdificios() {
     try {
