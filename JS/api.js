@@ -3,7 +3,7 @@
 // En este caso, se asume que la API está alojada localmente 
 // en el puerto 8000.
 //export const API_URL = "http://127.0.0.1:8000";
-export const API_URL = "https://flf80jw7-8000.usw3.devtunnels.ms/";
+export const API_URL = "https://flf80jw7-8000.usw3.devtunnels.ms";
 
 // Función global para enviar datos (POST)
 export async function post(endpoint, data) {
