@@ -1,4 +1,4 @@
-import { get, post, API_URL } from './api.js';
+import { API_URL } from './api.js';
 
 async function ejecutarLogin(event) {
     event.preventDefault();
@@ -9,33 +9,17 @@ async function ejecutarLogin(event) {
 
     if (contenedorError) contenedorError.textContent = "";
 
-    // =========================================================================
-    // 1. BYPASS DE DESARROLLO (Prioridad Máxima)
-    // =========================================================================
-    if (usuarioInput === "kminigo" || usuarioInput === "kuriel" || usuarioInput === "admin") {
-        console.log("Acceso concedido mediante bypass local de auditoría.");
-        localStorage.setItem("sgatru_session", JSON.stringify({
-            username: usuarioInput,
-            rol: "Administrador de Red",
-            token: "dev_session_bypass_authorized"
-        }));
-        
-        // CORRECCIÓN SPA: Apunta al home virtual por hash y sube un nivel a la raíz
-        window.location.href = "../index.html#/home";
-        return; 
-    }
-
-    // =========================================================================
-    // 2. INTENTO CON EL BACKEND (Solo si no es un usuario del bypass)
-    // =========================================================================
+    // 1. PREPARAR DATOS (FastAPI usa OAuth2, por lo que espera form-urlencoded)
     const formData = new URLSearchParams();
     formData.append('username', usuarioInput);
     formData.append('password', passwordInput);
 
+    // Limpiamos la URL base por si tiene una barra al final
     const urlDestino = `${API_URL.replace(/\/$/, "")}/login`; 
 
     try {
-        console.log("Enviando credenciales al servidor local:", urlDestino);
+        console.log("Validando credenciales con el servidor...");
+        
         const response = await fetch(urlDestino, {
             method: 'POST',
             headers: {
@@ -45,31 +29,34 @@ async function ejecutarLogin(event) {
         });
 
         if (response.ok) {
+            // 2. ÉXITO: Guardamos el token real devuelto por la base de datos
             const respuesta = await response.json();
+            
             localStorage.setItem("sgatru_session", JSON.stringify({
                 username: usuarioInput,
-                rol: respuesta.rol || "Administrador",
+                rol: respuesta.rol || "Usuario",
                 token: respuesta.access_token
             }));
             
-            // CORRECCIÓN SPA: Apunta al home virtual por hash y sube un nivel a la raíz
+            // Redirigimos al SPA
             window.location.href = "../index.html#/home";
             return;
+            
         } else {
+            // 3. ERROR DE CREDENCIALES: El usuario no existe o la contraseña está mal
             const errorData = await response.json().catch(() => ({}));
             if (contenedorError) {
-                contenedorError.textContent = `Servidor: ${errorData.detail || "Error de credenciales"}`;
+                contenedorError.textContent = errorData.detail || "Usuario o contraseña incorrectos.";
                 contenedorError.style.color = "#d9534f";
-                return;
             }
+            return;
         }
     } catch (apiError) {
-        console.warn("El backend no respondió de forma limpia.", apiError);
-    }
-
-    if (contenedorError) {
-        contenedorError.textContent = "Usuario o contraseña incorrectos.";
-        contenedorError.style.color = "#d9534f";
+        console.error("Fallo de red al intentar hacer login:", apiError);
+        if (contenedorError) {
+            contenedorError.textContent = "Error de conexión con el servidor. Intente más tarde.";
+            contenedorError.style.color = "#d9534f";
+        }
     }
 }
 

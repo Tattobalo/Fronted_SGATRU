@@ -1,209 +1,178 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Reportes - SGATRU</title>
-  <link rel="stylesheet" href="../CSS/reportes.css">
-</head>
-<body>
+<header class="topbar">
+  <div>
+    <h1>Reportes</h1>
+    <p>Generación de reportes sobre activos, alertas, conectividad y topología</p>
+  </div>
+</header>
 
-  <aside class="sidebar">
-    <img src="../IMG/logo-uaemex.png" class="logo" alt="UAEMex">
-    <h2>SGATRU</h2>
+<section class="report-summary">
 
-    <nav>
-      <a href="home.html">Dashboard</a>
-      <a href="campus.html">Campus</a>
-      <a href="edificio.html">Edificios</a>
-      <a href="inventario.html">Inventario</a>
-      <a href="alertas.html">Alertas</a>
-      <a class="active" href="#">Reportes</a>
-      <a href="#">Usuarios</a>
-    </nav>
-  </aside>
+  <div class="summary-card">
+    <h3>Reportes generados</h3>
+    <p>34</p>
+  </div>
 
-  <main class="main-content">
+  <div class="summary-card">
+    <h3>Activos auditados</h3>
+    <p class="green">153</p>
+  </div>
 
-    <header class="topbar">
-      <div>
-        <h1>Reportes</h1>
-        <p>Generación de reportes sobre activos, alertas, conectividad y topología</p>
-      </div>
-    </header>
+  <div class="summary-card">
+    <h3>Alertas incluidas</h3>
+    <p class="gold">25</p>
+  </div>
 
-    <section class="report-summary">
+  <div class="summary-card">
+    <h3>Último reporte</h3>
+    <p class="small-text">02/06/2026</p>
+  </div>
 
-      <div class="summary-card">
-        <h3>Reportes generados</h3>
-        <p>34</p>
-      </div>
+</section>
 
-      <div class="summary-card">
-        <h3>Activos auditados</h3>
-        <p class="green">153</p>
-      </div>
+<section class="reports-grid">
 
-      <div class="summary-card">
-        <h3>Alertas incluidas</h3>
-        <p class="gold">25</p>
-      </div>
+  <div class="report-card">
+    <div class="icon">📋</div>
+    <h2>Reporte de Inventario</h2>
+    <p>Listado general de activos registrados con IP, MAC, ubicación y responsable.</p>
 
-      <div class="summary-card">
-        <h3>Último reporte</h3>
-        <p class="small-text">02/06/2026</p>
-      </div>
+    <div class="report-actions">
+      <button>Generar PDF</button>
+      <button class="secondary">Exportar Excel</button>
+    </div>
+  </div>
 
-    </section>
+  <div class="report-card">
+    <div class="icon">🚨</div>
+    <h2>Reporte de Alertas</h2>
+    <p>Historial de fallas, equipos desconectados, IP duplicadas e intermitencias.</p>
 
-    <section class="reports-grid">
+    <div class="report-actions">
+      <button>Generar PDF</button>
+      <button class="secondary">Exportar Excel</button>
+    </div>
+  </div>
 
-      <div class="report-card">
-        <div class="icon">📋</div>
-        <h2>Reporte de Inventario</h2>
-        <p>Listado general de activos registrados con IP, MAC, ubicación y responsable.</p>
+  <div class="report-card">
+    <div class="icon">🌐</div>
+    <h2>Reporte de Topología</h2>
+    <p>Relación entre switches, puertos físicos y equipos conectados.</p>
 
-        <div class="report-actions">
-          <button>Generar PDF</button>
-          <button class="secondary">Exportar Excel</button>
-        </div>
-      </div>
+    <div class="report-actions">
+      <button>Generar PDF</button>
+      <button class="secondary">Ver mapa</button>
+    </div>
+  </div>
 
-      <div class="report-card">
-        <div class="icon">🚨</div>
-        <h2>Reporte de Alertas</h2>
-        <p>Historial de fallas, equipos desconectados, IP duplicadas e intermitencias.</p>
+  <div class="report-card">
+    <div class="icon">🏢</div>
+    <h2>Reporte por Edificio</h2>
+    <p>Resumen de activos y estado de conectividad por edificio, piso y aula.</p>
 
-        <div class="report-actions">
-          <button>Generar PDF</button>
-          <button class="secondary">Exportar Excel</button>
-        </div>
-      </div>
+    <div class="report-actions">
+      <button>Generar PDF</button>
+      <button class="secondary">Exportar Excel</button>
+    </div>
+  </div>
 
-      <div class="report-card">
-        <div class="icon">🌐</div>
-        <h2>Reporte de Topología</h2>
-        <p>Relación entre switches, puertos físicos y equipos conectados.</p>
+</section>
 
-        <div class="report-actions">
-          <button>Generar PDF</button>
-          <button class="secondary">Ver mapa</button>
-        </div>
-      </div>
+<section class="custom-report">
 
-      <div class="report-card">
-        <div class="icon">🏢</div>
-        <h2>Reporte por Edificio</h2>
-        <p>Resumen de activos y estado de conectividad por edificio, piso y aula.</p>
+  <h2>Generar Reporte Personalizado</h2>
 
-        <div class="report-actions">
-          <button>Generar PDF</button>
-          <button class="secondary">Exportar Excel</button>
-        </div>
-      </div>
+  <form>
 
-    </section>
+    <div class="form-group">
+      <label>Tipo de reporte</label>
+      <select>
+        <option>Inventario de activos</option>
+        <option>Alertas activas</option>
+        <option>Historial de conexión</option>
+        <option>Topología de red</option>
+        <option>Reporte por edificio</option>
+      </select>
+    </div>
 
-    <section class="custom-report">
+    <div class="form-group">
+      <label>Edificio</label>
+      <select>
+        <option>Todos</option>
+        <option>Edificio A</option>
+        <option>Edificio B</option>
+        <option>Biblioteca</option>
+        <option>Laboratorio</option>
+      </select>
+    </div>
 
-      <h2>Generar Reporte Personalizado</h2>
+    <div class="form-group">
+      <label>Estado</label>
+      <select>
+        <option>Todos</option>
+        <option>Online</option>
+        <option>Offline</option>
+        <option>Intermitente</option>
+      </select>
+    </div>
 
-      <form>
+    <div class="form-group">
+      <label>Formato</label>
+      <select>
+        <option>PDF</option>
+        <option>Excel</option>
+      </select>
+    </div>
 
-        <div class="form-group">
-          <label>Tipo de reporte</label>
-          <select>
-            <option>Inventario de activos</option>
-            <option>Alertas activas</option>
-            <option>Historial de conexión</option>
-            <option>Topología de red</option>
-            <option>Reporte por edificio</option>
-          </select>
-        </div>
+    <button type="submit" class="generate-btn">Generar reporte</button>
 
-        <div class="form-group">
-          <label>Edificio</label>
-          <select>
-            <option>Todos</option>
-            <option>Edificio A</option>
-            <option>Edificio B</option>
-            <option>Biblioteca</option>
-            <option>Laboratorio</option>
-          </select>
-        </div>
+  </form>
 
-        <div class="form-group">
-          <label>Estado</label>
-          <select>
-            <option>Todos</option>
-            <option>Online</option>
-            <option>Offline</option>
-            <option>Intermitente</option>
-          </select>
-        </div>
+</section>
 
-        <div class="form-group">
-          <label>Formato</label>
-          <select>
-            <option>PDF</option>
-            <option>Excel</option>
-          </select>
-        </div>
+<section class="history-section">
 
-        <button type="submit" class="generate-btn">Generar reporte</button>
+  <h2>Historial de Reportes</h2>
 
-      </form>
+  <table>
+    <thead>
+      <tr>
+        <th>Reporte</th>
+        <th>Tipo</th>
+        <th>Fecha</th>
+        <th>Generado por</th>
+        <th>Formato</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
 
-    </section>
+    <tbody>
+      <tr>
+        <td>Inventario general</td>
+        <td>Inventario</td>
+        <td>02/06/2026</td>
+        <td>Administrador</td>
+        <td>PDF</td>
+        <td><a href="#">Descargar</a></td>
+      </tr>
 
-    <section class="history-section">
+      <tr>
+        <td>Alertas críticas</td>
+        <td>Alertas</td>
+        <td>01/06/2026</td>
+        <td>Administrador</td>
+        <td>Excel</td>
+        <td><a href="#">Descargar</a></td>
+      </tr>
 
-      <h2>Historial de Reportes</h2>
+      <tr>
+        <td>Topología Edificio A</td>
+        <td>Topología</td>
+        <td>28/05/2026</td>
+        <td>Redes TI</td>
+        <td>PDF</td>
+        <td><a href="#">Descargar</a></td>
+      </tr>
+    </tbody>
+  </table>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Reporte</th>
-            <th>Tipo</th>
-            <th>Fecha</th>
-            <th>Generado por</th>
-            <th>Formato</th>
-            <th>Acción</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>Inventario general</td>
-            <td>Inventario</td>
-            <td>02/06/2026</td>
-            <td>Administrador</td>
-            <td>PDF</td>
-            <td><a href="#">Descargar</a></td>
-          </tr>
-
-          <tr>
-            <td>Alertas críticas</td>
-            <td>Alertas</td>
-            <td>01/06/2026</td>
-            <td>Administrador</td>
-            <td>Excel</td>
-            <td><a href="#">Descargar</a></td>
-          </tr>
-
-          <tr>
-            <td>Topología Edificio A</td>
-            <td>Topología</td>
-            <td>28/05/2026</td>
-            <td>Redes TI</td>
-            <td>PDF</td>
-            <td><a href="#">Descargar</a></td>
-          </tr>
-        </tbody>
-      </table>
-
-    </section>
-
-  </main>
-
-</body>
-</html>
+</section>
