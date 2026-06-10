@@ -28,13 +28,15 @@
 <section class="filters">
   <input type="text" id="buscar-alerta" placeholder="Buscar por equipo, IP o tipo de incidente...">
   <select id="filtro-severidad">
-    <option value="">Todas las severidades</option>
+    <option value="Todas las severidades">Todas las severidades</option>
     <option value="Critica">Crítica</option>
     <option value="Advertencia">Advertencia</option>
   </select>
+
   <select id="filtro-estado-alerta">
     <option value="activas">Solo activas</option>
     <option value="todas">Todas (Incluir resueltas)</option>
+    <option value="resueltas">Resueltas</option>
   </select>
   <button id="btn-filtrar-alertas">Filtrar</button>
 </section>

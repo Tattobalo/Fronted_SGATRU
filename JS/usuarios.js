@@ -91,16 +91,42 @@ function ejecutarFiltrado() {
     renderizarTabla(usuariosFiltrados);
 }
 
-async function eliminarUsuario(event) {
-    const id = event.target.closest(".btn-delete").getAttribute("data-id");
-    if (confirm("¿Estás seguro de que deseas eliminar este usuario de manera permanente?")) {
-        try {
-            await del(`/assets/responsables/${id}`);
-            alert("Usuario eliminado correctamente.");
-            cargarUsuarios();
-        } catch (error) {
-            alert("No se pudo eliminar al usuario.");
+async function eliminarUsuario(idUsuario) {
+    // 1. Obtenemos el token real que debiste guardar en el localStorage durante el Login
+    const token = localStorage.getItem('token'); 
+    
+    if (!token) {
+        alert("No tienes permisos suficientes. Por favor, verificalo con un administrador.");
+        return;
+    }
+
+    try {
+        const respuesta = await fetch(`http://127.0.0.1:8000/assets/responsables/${idUsuario}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`, 
+                'Content-Type': 'application/json'
+            }
+            
+        });
+
+        if (respuesta.status === 204) { 
+            console.log("Usuario eliminado exitosamente");
+            cargarUsuarios(); 
+        } 
+        else if (respuesta.status === 403) {
+            alert("Acceso denegado: Solo los Administradores de Red pueden eliminar cuentas.");
+        } 
+        else if (respuesta.status === 401) {
+            alert("Tu sesión es inválida o ha expirado. Vuelve a iniciar sesión.");
+        } 
+        else {
+            const errorData = await respuesta.json();
+            alert(`Error del servidor: ${errorData.detail}`);
         }
+
+    } catch (error) {
+        console.error("Error en la petición:", error);
     }
 }
 

@@ -13,15 +13,18 @@ let listaEspaciosGlobal = [];
 let listaNivelesGlobal = [];
 let listaEdificiosGlobal = [];
 let listaResponsablesGlobal = [];
+let listaAlertasGlobal = []; 
 
 export async function cargarInventario() {
     try {
-        const [activos, espacios, niveles, edificios, responsables] = await Promise.all([
-            get('/assets/activos/'),
-            get('/locations/espacios/'),
-            get('/locations/niveles/'),
-            get('/locations/edificios/'),
-            get('/assets/responsables/')
+        // 1. DESCARGA PARALELA (Incluimos las alertas reales del motor de monitoreo)
+        const [activos, espacios, niveles, edificios, responsables, alertas] = await Promise.all([
+            get('/assets/activos/').catch(() => []),
+            get('/locations/espacios/').catch(() => []),
+            get('/locations/niveles/').catch(() => []),
+            get('/locations/edificios/').catch(() => []),
+            get('/assets/responsables/').catch(() => []),
+            get('/monitoring/alertas/').catch(() => []) 
         ]);
 
         listaActivosGlobal = activos;
@@ -29,15 +32,25 @@ export async function cargarInventario() {
         listaNivelesGlobal = niveles;
         listaEdificiosGlobal = edificios;
         listaResponsablesGlobal = responsables;
+        listaAlertasGlobal = alertas;
 
-        const dnsOnline = listaActivosGlobal.filter(a => (a.estado_operativo || a.estado || "Online") === "Online");
-        const dnsOffline = listaActivosGlobal.filter(a => (a.estado_operativo || a.estado) === "Offline");
-        const dnsWarning = listaActivosGlobal.filter(a => (a.estado_operativo || a.estado) === "Intermitente");
+        // 2. MATEMÁTICA DE ESTADÍSTICAS REALES POR ALERTA
+        let conteoOnline = 0;
+        let conteoOffline = 0;
+
+        listaActivosGlobal.forEach(activo => {
+            const tieneAlerta = listaAlertasGlobal.some(al => al.resuelta === false && Number(al.id_activo) === Number(activo.id_activo));
+            if (tieneAlerta) {
+                conteoOffline++;
+            } else {
+                conteoOnline++;
+            }
+        });
 
         if (document.getElementById("total-activos")) document.getElementById("total-activos").textContent = listaActivosGlobal.length;
-        if (document.getElementById("total-online")) document.getElementById("total-online").textContent = dnsOnline.length;
-        if (document.getElementById("total-offline")) document.getElementById("total-offline").textContent = dnsOffline.length;
-        if (document.getElementById("total-intermitentes")) document.getElementById("total-intermitentes").textContent = dnsWarning.length;
+        if (document.getElementById("total-online")) document.getElementById("total-online").textContent = conteoOnline;
+        if (document.getElementById("total-offline")) document.getElementById("total-offline").textContent = conteoOffline;
+        if (document.getElementById("total-intermitentes")) document.getElementById("total-intermitentes").textContent = "0"; 
 
         renderizarTablaInventario(listaActivosGlobal);
         vincularFiltrosInventario();
@@ -58,6 +71,7 @@ function renderizarTablaInventario(activosLista) {
     }
 
     activosLista.forEach(activo => {
+        // CRUZAR UBICACIÓN JERÁRQUICA
         let cadenaUbicacion = "No asignada";
         const espacio = listaEspaciosGlobal.find(e => Number(e.id_espacio) === Number(activo.id_espacio));
         if (espacio) {
@@ -66,23 +80,34 @@ function renderizarTablaInventario(activosLista) {
             cadenaUbicacion = `${edificio ? edificio.nombre : "Edificio Indefinido"} / Piso ${nivel ? nivel.numero_nivel : "?"} / ${espacio.nombre_aula}`;
         }
 
+        // CRUZAR RESPONSABLE DIRECTO (Uso de nombre_completo según el modelo)
         const resp = listaResponsablesGlobal.find(r => Number(r.id_responsable) === Number(activo.id_responsable));
-        const estadoActual = activo.estado_operativo || activo.estado || "Online";
+        const nombreResp = resp ? resp.nombre_completo : "Sin asignar";
+
+        // CRUZAR ESTADO DE MONITOREO REAL
+        const alertaActiva = listaAlertasGlobal.find(al => al.resuelta === false && Number(al.id_activo) === Number(activo.id_activo));
+        const estadoActual = alertaActiva ? "Offline" : "Online";
+        const claseEstado = alertaActiva ? "offline" : "online"; 
 
         const fila = document.createElement("tr");
         fila.innerHTML = `
-            <td><strong>${activo.hostname || activo.nombre_activo || 'paquito'}</strong></td>
-            <td>${activo.ip_estatica || activo.ip_activo || 'Sin IP'}</td>
-            <td><code>${activo.mac_address || activo.mac_activo || 'N/A'}</code></td>
+            <td><strong>${activo.hostname || 'Sin Nombre'}</strong></td>
+            <td>${activo.ip_estatica || 'Sin IP'}</td>
+            <td><code>${activo.mac_address || 'N/A'}</code></td>
             <td>${cadenaUbicacion}</td>
-            <td>👤 ${resp ? resp.nombre_completo : "Sin asignar"}</td>
-            <td><span class="status-badge ${estadoActual.toLowerCase()}">${estadoActual}</span></td>
-            <td><button class="btn-view" data-id="${activo.id_activo}" style="background:#005b2e; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">Ver Equipo</button></td>
+            <td>👤 ${nombreResp}</td>
+            <td><span class="status-badge ${claseEstado}" style="color: ${alertaActiva ? '#e53e3e' : '#00a650'}; font-weight: bold;">● ${estadoActual}</span></td>
+            <td><button class="btn-view" style="background:#005b2e; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">Ver Equipo</button></td>
         `;
         
         fila.querySelector(".btn-view").addEventListener("click", () => {
-            navegarA(`/equipo?id=${activo.id_activo}`);
+            navigate_to_device(activo.id_activo);
         });
+        
+        function navigate_to_device(id) {
+            navegarA(`/equipo?id=${id}`);
+        }
+        
         tabla.appendChild(fila);
     });
 }
@@ -92,9 +117,24 @@ function ejecutarFiltradoInventario() {
     const estadoSel = document.getElementById("filtro-estado-activo").value;
 
     const activosFiltrados = listaActivosGlobal.filter(activo => {
-        const estadoActual = (activo.estado_operativo || activo.estado || "Online").toLowerCase();
-        const cumpleTexto = !texto || (activo.hostname || "").toLowerCase().includes(texto) || (activo.ip_estatica || "").toLowerCase().includes(texto);
-        const cumpleEstado = !estadoSel || estadoActual === estadoSel.toLowerCase();
+        // 1. RECALCULAMOS ESTADO
+        const tieneAlerta = listaAlertasGlobal.some(al => al.resuelta === false && Number(al.id_activo) === Number(activo.id_activo));
+        const estadoReal = tieneAlerta ? "offline" : "online";
+
+        // 2. OBTENEMOS EL NOMBRE DEL RESPONSABLE PARA PODER BUSCARLO
+        const resp = listaResponsablesGlobal.find(r => Number(r.id_responsable) === Number(activo.id_responsable));
+        const nombreResp = resp ? resp.nombre_completo.toLowerCase() : "sin asignar";
+
+        // 3. SUPER BUSCADOR: Revisamos en equipo, ip, mac y responsable
+        const cumpleTexto = !texto || 
+            (activo.hostname || "").toLowerCase().includes(texto) || 
+            (activo.ip_estatica || "").toLowerCase().includes(texto) ||
+            (activo.mac_address || "").toLowerCase().includes(texto) ||
+            nombreResp.includes(texto);
+
+        // 4. VERIFICAMOS EL FILTRO SELECT (Online/Offline)
+        const cumpleEstado = !estadoSel || estadoReal === estadoSel.toLowerCase();
+        
         return cumpleTexto && cumpleEstado;
     });
 
@@ -107,4 +147,7 @@ function vincularFiltrosInventario() {
 
     const inputBusqueda = document.getElementById("buscar-activo");
     if (inputBusqueda) inputBusqueda.addEventListener("input", ejecutarFiltradoInventario);
+    
+    const selectEstado = document.getElementById("filtro-estado-activo");
+    if (selectEstado) selectEstado.addEventListener("change", ejecutarFiltradoInventario);
 }
