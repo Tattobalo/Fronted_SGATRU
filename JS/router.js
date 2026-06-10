@@ -1,5 +1,5 @@
 import { inicializarDashboard } from './home.js';
-import { renderizarEdificios } from './campus.js';
+import { inicializarCampus } from './campus.js';
 import { inicializarEdificio } from './edificio.js';
 import { inicializarMapaNivel } from './nivel.js';
 import { inicializarAula } from './aula.js';
@@ -27,7 +27,7 @@ const mapasDeVistas = {
 
 const controladores = {
   '/home': inicializarDashboard,
-  '/campus': renderizarEdificios,
+  '/campus': inicializarCampus,
   '/edificio': inicializarEdificio,
   '/nivel': inicializarMapaNivel,
   '/aula': inicializarAula,

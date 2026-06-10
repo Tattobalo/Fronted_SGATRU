@@ -153,18 +153,17 @@ export async function inicializarDetalleEquipo() {
         const contenedorAlertas = document.getElementById("contenedor-alertas-equipo");
         const contenedorTimeline = document.getElementById("contenedor-timeline-equipo");
 
-        const tieneCriticas = alertasDelActivo.some(al => al.estado === "Activa" && al.gravedad === "Crítica");
-        const tieneAdvertencias = alertasDelActivo.some(al => al.estado === "Activa" && al.gravedad === "Advertencia");
+        const alertasActivas = alertasDelActivo.filter(al => al.resuelta === false);
+        const tieneAlertasActivas = alertasActivas.length > 0;
 
-        if (tieneCriticas) {
+        if (tieneAlertasActivas) {
             badgeEstado.textContent = "● Offline";
             badgeEstado.className = "status offline";
-        } else if (tieneAdvertencias) {
-            badgeEstado.textContent = "● Alertas";
-            badgeEstado.className = "status warning";
+            if (badgeEstado.style) badgeEstado.style.color = "#e53e3e"; // Forzar color rojo visualmente si es necesario
         } else {
             badgeEstado.textContent = "● Online";
             badgeEstado.className = "status online";
+            if (badgeEstado.style) badgeEstado.style.color = "#48bb78"; // Verde estable
         }
 
         // Renderizar caja de alertas de tu base de datos

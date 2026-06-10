@@ -11,12 +11,18 @@ import { obtenerParametrosHash } from './router.js';
 
 
 export async function inicializarEdificio() {
+    
+    const datosSesion = JSON.parse(localStorage.getItem("sgatru_session"));
+    const txtRol = document.getElementById("rol-usuario-topbar");
+    
+    if (txtRol && datosSesion && datosSesion.rol) {
+        txtRol.textContent = datosSesion.rol;
+    }
+
     const contenedorDistribucion = document.getElementById("contenedor-pisos") || document.getElementById("Distribucion-infraestructura") || document.querySelector(".main-content section:last-of-type p");
 
     const params = obtenerParametrosHash();
-
-    const idEdificio =
-        params.get("id") || "4";
+    const idEdificio = params.get("id") || "4";
 
     let edificios = [], niveles = [], espacios = [], activos = [], alertas = [];
 

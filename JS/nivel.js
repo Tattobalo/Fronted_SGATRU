@@ -11,7 +11,12 @@ import { navegarA, obtenerParametrosHash } from './router.js';
 
 export async function inicializarMapaNivel() {
 
-    //console.log("INICIALIZANDO NIVEL");
+    // 1. LÓGICA DE ROL DINÁMICO
+    const datosSesion = JSON.parse(localStorage.getItem("sgatru_session"));
+    const txtRol = document.getElementById("rol-usuario-topbar");
+    if (txtRol && datosSesion && datosSesion.rol) {
+        txtRol.textContent = datosSesion.rol;
+    }
 
     const mapaContainer = document.getElementById("contenedor-mapa-aulas");
     if (!mapaContainer) return;
@@ -23,31 +28,31 @@ export async function inicializarMapaNivel() {
         params.get("id_nivel");
 
     try {
-        // 1. Obtener la información del Backend
-        const niveles = await get('/locations/niveles/');
+        // 2. OBTENER INFORMACIÓN DEL BACKEND (Agregamos alertas y edificios)
+        const [niveles, espacios, switches, activos, alertas, edificios] = await Promise.all([
+            get('/locations/niveles/').catch(() => []),
+            get('/locations/espacios/').catch(() => []),
+            get('/network/switches/').catch(() => []),
+            get('/assets/activos/').catch(() => []),
+            get('/monitoring/alertas/').catch(() => []),
+            get('/locations/edificios/').catch(() => [])
+        ]);
 
         const nivelDefault =
             niveles.find(n => n.numero_nivel === 1) ||
             niveles[0];
 
-        if (!idNivel) {
+        if (!idNivel && nivelDefault) {
             idNivel = nivelDefault.id_nivel;
         }
 
-        const espacios = await get('/locations/espacios/');
-        const switches = await get('/network/switches/');
-        const activos = await get('/assets/activos/');
-
-        // --- BLOQUE DE AUDITORÍA (MIRA ESTO EN TU CONSOLA F12) ---
-        //console.log("=== AUDITORÍA DE DATOS SGATRU ===");
-        //console.log("ID Nivel Buscado desde URL:", idNivel);
-        //console.log("Espacios de la BD:", espacios);
-        //console.log("Activos de la BD:", activos);
-        // --------------------------------------------------------
-
+        // 3. NOMBRE DE EDIFICIO DINÁMICO
         const nivelActual = niveles.find(n => n.id_nivel == idNivel);
         if (nivelActual) {
-            document.getElementById("texto-encabezado-piso").textContent = `Edificio A - Piso ${nivelActual.numero_nivel}`;
+            const edificioDelNivel = edificios.find(e => e.id_edificio == nivelActual.id_edificio);
+            const nombreEdificio = edificioDelNivel ? edificioDelNivel.nombre : "Edificio Desconocido";
+            
+            document.getElementById("texto-encabezado-piso").textContent = `${nombreEdificio} - Piso ${nivelActual.numero_nivel}`;
         }
 
         const espaciosDelNivel = espacios.filter(e => e.id_nivel == idNivel);
@@ -61,22 +66,35 @@ export async function inicializarMapaNivel() {
 
         let totalSwitchesPiso = 0;
         let totalActivosPiso = 0;
+        let totalAlertasPiso = 0;
 
         espaciosDelNivel.forEach((espacio, index) => {
-            // CORRECCIÓN DE FILTRADO SEGURO (Nivelando tipos de datos String vs Int)
             const switchesEnSalon = switches.filter(s => Number(s.id_espacio) === Number(espacio.id_espacio)).length;
 
-            // Evaluamos tanto 'id_espacio' (tu modelo) como posibles variaciones de nombres
-            const activosEnSalon = activos.filter(a => {
+            const activosEnSalonFiltro = activos.filter(a => {
                 const idActivoEspacio = a.id_espacio || a.espacio_id;
                 return Number(idActivoEspacio) === Number(espacio.id_espacio);
-            }).length;
+            });
+            const activosEnSalon = activosEnSalonFiltro.length;
 
             totalSwitchesPiso += switchesEnSalon;
             totalActivosPiso += activosEnSalon;
 
-            let textoActivos = `${activosEnSalon} activos`;
+            // 4. LÓGICA DE COLOR Y ALERTAS POR AULA
+            const idsActivosSalon = activosEnSalonFiltro.map(a => Number(a.id_activo));
+            const alertasSalon = alertas.filter(al => al.resuelta === false && idsActivosSalon.includes(Number(al.id_activo)));
+            
+            totalAlertasPiso += alertasSalon.length;
 
+            let textoEstado = "● Operativo";
+            let colorPunto = "color: #00a650;"; // Verde por defecto
+
+            if (alertasSalon.length > 0) {
+                textoEstado = "● Con alertas";
+                colorPunto = "color: #d4af37;"; // Dorado/Amarillo si hay fallas
+            }
+
+            let textoActivos = `${activosEnSalon} activos`;
             if (espacio.tipo_espacio === "Cuarto de Red") {
                 textoActivos = `${switchesEnSalon} switches`;
             }
@@ -84,9 +102,10 @@ export async function inicializarMapaNivel() {
             const card = document.createElement("div");
             card.className = `room room-${(index % 4) + 1}`;
 
+            // Tarjeta limpia, sin botones, con color dinámico
             card.innerHTML = `
             <h3>${espacio.nombre_aula}</h3>
-            <span class="online">● Operativo</span>
+            <span style="${colorPunto} font-weight: 600;">${textoEstado}</span>
             <p>${textoActivos}</p>
             `;
 
@@ -103,7 +122,7 @@ export async function inicializarMapaNivel() {
         document.getElementById("stat-piso-aulas").textContent = espaciosDelNivel.length;
         document.getElementById("stat-piso-activos").textContent = totalActivosPiso;
         document.getElementById("stat-piso-switches").textContent = totalSwitchesPiso;
-        document.getElementById("stat-piso-alertas").textContent = "0";
+        document.getElementById("stat-piso-alertas").textContent = totalAlertasPiso;
 
     } catch (error) {
         console.error("Error al procesar el layout:", error);

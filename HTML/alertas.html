@@ -1,79 +1,46 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Alertas - SGATRU</title>
-  <link rel="stylesheet" href="../CSS/alertas.css">
-  <script type="module" src="../JS/alertas.js"></script>
-</head>
-<body>
+<header class="topbar">
+  <div>
+    <h1>Alertas de Red</h1>
+    <p>Monitoreo de fallas, desconexiones, intermitencias y riesgos detectados</p>
+  </div>
+  <button class="scan-btn" id="btn-ejecutar-escaneo">Ejecutar escaneo</button>
+</header>
 
-  <aside class="sidebar">
-    <img src="../IMG/logo-uaemex.png" class="logo" alt="UAEMex">
-    <h2>SGATRU</h2>
+<section class="alerts-summary">
+  <div class="summary-card">
+    <h3>Críticas</h3>
+    <p class="red" id="alertas-criticas">-</p>
+  </div>
+  <div class="summary-card">
+    <h3>Advertencias</h3>
+    <p class="gold" id="alertas-advertencias">-</p>
+  </div>
+  <div class="summary-card">
+    <h3>Resueltas</h3>
+    <p class="green" id="alertas-resueltas">-</p>
+  </div>
+  <div class="summary-card">
+    <h3>Total Histórico</h3>
+    <p id="alertas-totales">-</p>
+  </div>
+</section>
 
-    <nav>
-      <a href="home.html">Dashboard</a>
-      <a href="campus.html">Campus</a>
-      <a href="edificio.html">Edificios</a>
-      <a href="piso.html">Piso</a>
-      <a href="aula.html">Aula/Laboratorio</a>
-      <!-- <a href="equipo.html">Equipo</a> -->
-      <a href="inventario.html">Inventario</a>
-      <a class="active" href="#">Alertas</a>
-      <a href="#">Reportes</a>
-    </nav>
-  </aside>
+<section class="filters">
+  <input type="text" id="buscar-alerta" placeholder="Buscar por equipo, IP o tipo de incidente...">
+  <select id="filtro-severidad">
+    <option value="Todas las severidades">Todas las severidades</option>
+    <option value="Critica">Crítica</option>
+    <option value="Advertencia">Advertencia</option>
+  </select>
 
-  <main class="main-content">
+  <select id="filtro-estado-alerta">
+    <option value="activas">Solo activas</option>
+    <option value="todas">Todas (Incluir resueltas)</option>
+    <option value="resueltas">Resueltas</option>
+  </select>
+  <button id="btn-filtrar-alertas">Filtrar</button>
+</section>
 
-    <header class="topbar">
-      <div>
-        <h1>Alertas de Red</h1>
-        <p>Monitoreo de fallas, desconexiones, intermitencias y riesgos detectados</p>
-      </div>
-      <button class="scan-btn" id="btn-ejecutar-escaneo">Ejecutar escaneo</button>
-    </header>
-
-    <section class="alerts-summary">
-      <div class="summary-card">
-        <h3>Críticas</h3>
-        <p class="red" id="alertas-criticas">-</p>
-      </div>
-      <div class="summary-card">
-        <h3>Advertencias</h3>
-        <p class="gold" id="alertas-advertencias">-</p>
-      </div>
-      <div class="summary-card">
-        <h3>Resueltas</h3>
-        <p class="green" id="alertas-resueltas">-</p>
-      </div>
-      <div class="summary-card">
-        <h3>Total Histórico</h3>
-        <p id="alertas-totales">-</p>
-      </div>
-    </section>
-
-    <section class="filters">
-      <input type="text" id="buscar-alerta" placeholder="Buscar por equipo, IP o tipo de incidente...">
-      <select id="filtro-severidad">
-        <option value="">Todas las severidades</option>
-        <option value="Critica">Crítica</option>
-        <option value="Advertencia">Advertencia</option>
-      </select>
-      <select id="filtro-estado-alerta">
-        <option value="activas">Solo activas</option>
-        <option value="todas">Todas (Incluir resueltas)</option>
-      </select>
-      <button id="btn-filtrar-alertas">Filtrar</button>
-    </section>
-
-    <section class="alerts-grid" id="contenedor-tarjetas-alertas">
-        <p>Escaneando y recuperando estado de incidencias...</p>
-    </section>
-
-  </main>
-
-</body>
-</html>
+<section class="alerts-grid" id="contenedor-tarjetas-alertas">
+  <p>Escaneando y recuperando estado de incidencias...</p>
+</section>
