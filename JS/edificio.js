@@ -9,7 +9,6 @@ import { get } from './api.js';
 import { navegarA } from './router.js';
 import { obtenerParametrosHash } from './router.js';
 
-
 export async function inicializarEdificio() {
     
     const datosSesion = JSON.parse(localStorage.getItem("sgatru_session"));
@@ -22,21 +21,27 @@ export async function inicializarEdificio() {
     const contenedorDistribucion = document.getElementById("contenedor-pisos") || document.getElementById("Distribucion-infraestructura") || document.querySelector(".main-content section:last-of-type p");
 
     const params = obtenerParametrosHash();
-    const idEdificio = params.get("id") || "4";
+    let idEdificio = params.get("id"); 
 
     let edificios = [], niveles = [], espacios = [], activos = [], alertas = [];
 
     try {
         edificios = await get('locations/edificios/').catch(() => []);
+        
+        if (!idEdificio) {
+            const edificioA = edificios.find(e => e.nombre.trim().toUpperCase() === "EDIFICIO A");
+            idEdificio = edificioA ? edificioA.id_edificio : (edificios.length > 0 ? edificios[0].id_edificio : "1");
+        }
+
         niveles = await get('locations/niveles/').catch(() => []);
         espacios = await get('locations/espacios/').catch(() => []);
         activos = await get('assets/activos/').catch(() => []);
         alertas = await get('monitoring/alertas/').catch(() => []);
 
         if (niveles.length === 0) {
-            console.warn("API inactiva o error de red. Usando datos locales para no romper la vista.");
+            console.warn("API inactiva o error de red. Usando datos locales.");
             niveles = [{ id_nivel: 10, id_edificio: idEdificio, numero_nivel: 1 }];
-            espacios = [{ id_espacio: 3, id_nivel: 10, nombre_aula: "Zaibuzai" }];
+            espacios = [{ id_espacio: 3, id_nivel: 10, nombre_aula: "Aula Default" }];
             activos = [];
             alertas = [];
         }
@@ -45,31 +50,37 @@ export async function inicializarEdificio() {
         if (edificioActual && document.getElementById("nombre-edificio")) {
             document.getElementById("nombre-edificio").textContent = edificioActual.nombre;
         }
-        console.log("ID edificio:", idEdificio);
-        console.log("Niveles:", niveles);
 
-        const nivelesDelEdificio = niveles.filter(
-            n => Number(n.id_edificio) === Number(idEdificio)
-        );
-
-        console.log("Niveles filtrados:", nivelesDelEdificio)
+        const nivelesDelEdificio = niveles.filter(n => Number(n.id_edificio) === Number(idEdificio));
         const idsNiveles = nivelesDelEdificio.map(n => n.id_nivel);
 
         const espaciosDelEdificio = espacios.filter(e => idsNiveles.includes(e.id_nivel));
         const idsEspacios = espaciosDelEdificio.map(e => e.id_espacio);
 
         const activosDelEdificio = activos.filter(a => idsEspacios.includes(a.id_espacio));
-        const alertasDelEdificio = alertas.filter(al => idsEspacios.includes(al.id_espacio) || activosDelEdificio.map(act => act.id_activo).includes(al.id_activo));
+        
+        // =====================================================================
+        // CORRECCIÓN 1: Filtramos SOLO las alertas no resueltas de este edificio
+        // =====================================================================
+        const alertasActivasEdificio = alertas.filter(al => 
+            al.resuelta === false && 
+            (idsEspacios.includes(al.id_espacio) || activosDelEdificio.map(act => act.id_activo).includes(al.id_activo))
+        );
 
-        const tarjetaPisos = document.getElementById("stat-pisos") || document.querySelector(".summary-card:nth-child(1) p, .card:nth-child(1) .number");
-        const tarjetaAulas = document.getElementById("stat-aulas") || document.querySelector(".summary-card:nth-child(2) p, .card:nth-child(2) .number");
-        const tarjetaActivos = document.getElementById("stat-activos") || document.querySelector(".summary-card:nth-child(3) p, .card:nth-child(3) .number");
-        const tarjetaAlertas = document.getElementById("stat-alertas") || document.querySelector(".summary-card:nth-child(4) p, .card:nth-child(4) .number");
+        const tarjetaPisos = document.getElementById("stat-pisos");
+        const tarjetaAulas = document.getElementById("stat-aulas");
+        const tarjetaActivos = document.getElementById("stat-activos");
+        const tarjetaAlertas = document.getElementById("stat-alertas");
 
         if (tarjetaPisos) tarjetaPisos.textContent = nivelesDelEdificio.length;
         if (tarjetaAulas) tarjetaAulas.textContent = espaciosDelEdificio.length;
         if (tarjetaActivos) tarjetaActivos.textContent = activosDelEdificio.length;
-        if (tarjetaAlertas) tarjetaAlertas.textContent = alertasDelEdificio.length;
+        
+        // Mostramos las alertas reales activas
+        if (tarjetaAlertas) {
+            tarjetaAlertas.textContent = alertasActivasEdificio.length;
+            tarjetaAlertas.className = alertasActivasEdificio.length > 0 ? "gold" : "green";
+        }
 
         if (contenedorDistribucion) {
             contenedorDistribucion.innerHTML = "";
@@ -81,27 +92,31 @@ export async function inicializarEdificio() {
 
             nivelesDelEdificio
                 .sort((a, b) => b.numero_nivel - a.numero_nivel)
-                .forEach((nivel, index) => {
+                .forEach((nivel) => {
 
-                    const espaciosNivel = espacios.filter(
-                        e => Number(e.id_nivel) === Number(nivel.id_nivel)
-                    );
-
+                    const espaciosNivel = espacios.filter(e => Number(e.id_nivel) === Number(nivel.id_nivel));
                     const idsEspaciosNivel = espaciosNivel.map(e => e.id_espacio);
+                    const activosNivel = activos.filter(a => idsEspaciosNivel.includes(a.id_espacio));
+                    const idsActivosNivel = activosNivel.map(a => a.id_activo);
 
-                    const activosNivel = activos.filter(
-                        a => idsEspaciosNivel.includes(a.id_espacio)
-                    );
+                    // =====================================================================
+                    // CORRECCIÓN 2: Lógica dinámica de estado por piso
+                    // =====================================================================
+                    const alertasDelNivel = alertasActivasEdificio.filter(al => idsActivosNivel.includes(al.id_activo));
+                    const hayFalla = alertasDelNivel.length > 0;
+                    
+                    const estadoTexto = hayFalla ? "● Falla de red" : "● Operativo";
+                    // Dependiendo de tu CSS, usamos la clase que pinta rojo/naranja o verde
+                    const estadoClase = hayFalla ? "offline" : "online"; 
+                    const estadoColorStyle = hayFalla ? "color: #e53e3e;" : "color: #0e9f4b;";
 
                     const card = document.createElement("div");
-
                     card.className = "floor-card";
-
                     card.innerHTML = `
                     <h3>Piso ${nivel.numero_nivel}</h3>
 
-                    <span class="status online">
-                        ● Operativo
+                    <span class="status ${estadoClase}" style="${estadoColorStyle} font-weight:bold; display:inline-block; margin: 10px 0;">
+                        ${estadoTexto}
                     </span>
 
                     <div class="floor-data">
@@ -111,13 +126,11 @@ export async function inicializarEdificio() {
                     `;
 
                     card.style.cursor = "pointer";
-
                     card.addEventListener("click", () => {
                         navegarA(`/nivel?id=${nivel.id_nivel}`);
                     });
 
                     contenedorDistribucion.appendChild(card);
-
                 });
         }
     } catch (error) {

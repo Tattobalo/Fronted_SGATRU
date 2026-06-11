@@ -216,6 +216,145 @@ export async function inicializarDetalleEquipo() {
             }
         }
 
+        // =========================================================================
+        // 8. GENERACIÓN DEL REPORTE DEL EQUIPO (NUEVO)
+        // =========================================================================
+        const btnReporteEquipo = document.querySelector(".report-btn");
+        if (btnReporteEquipo) {
+            // Clonamos el botón para remover cualquier listener previo si se cambia de vista en la SPA
+            const nuevoBtn = btnReporteEquipo.cloneNode(true);
+            btnReporteEquipo.replaceWith(nuevoBtn);
+
+            nuevoBtn.addEventListener("click", () => {
+                const fechaReporte = new Date().toLocaleDateString('es-MX');
+                const horaReporte = new Date().toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
+                const usuarioSesion = localStorage.getItem("sgatru_session") 
+                    ? JSON.parse(localStorage.getItem("sgatru_session")).username 
+                    : "Sistema";
+
+                // Capturar el estado lógico visual actual
+                const estadoActual = badgeEstado.textContent.includes("Online") ? "● Online" : "● Offline";
+                const claseEstado = badgeEstado.textContent.includes("Online") ? "badge-ok" : "badge-err";
+
+                // Construcción de la tabla de alertas/incidencias en formato HTML para el PDF
+                let tablaAlertasHTML = "";
+                if (alertasDelActivo.length === 0) {
+                    tablaAlertasHTML = `<p style="color: #005b2e; font-style: italic;">✓ El dispositivo no cuenta con alertas o incidencias vigentes en la base de datos.</p>`;
+                } else {
+                    let filasAlertas = alertasDelActivo.map(al => `
+                        <tr>
+                            <td>${al.tipo_alerta || 'Alerta de Red'}</td>
+                            <td>${al.mensaje || 'Registrado en escaneo rutinario.'}</td>
+                            <td>${al.fecha_hora ? new Date(al.fecha_hora).toLocaleString('es-MX') : 'Reciente'}</td>
+                            <td><span class="${al.resuelta ? 'badge-ok' : 'badge-err'}">${al.resuelta ? 'Resuelta' : 'Activa'}</span></td>
+                        </tr>
+                    `).join("");
+
+                    tablaAlertasHTML = `
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tipo de Incidencia</th>
+                                    <th>Mensaje / Comportamiento</th>
+                                    <th>Fecha y Hora</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${filasAlertas}
+                            </tbody>
+                        </table>
+                    `;
+                }
+
+                // Abrir ventana limpia de impresión
+                const ventanaImpresion = window.open("", "_blank");
+                ventanaImpresion.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="es">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>Reporte Técnico - ${activoActual.hostname}</title>
+                        <style>
+                            body { font-family: 'Segoe UI', Arial, sans-serif; padding: 40px; color: #333; line-height: 1.6; }
+                            .header-reporte { border-bottom: 3px solid #d4af37; padding-bottom: 15px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: flex-end; }
+                            h1 { color: #005b2e; margin: 0; font-size: 28px; }
+                            .meta-reporte { text-align: right; font-size: 0.9em; color: #555; }
+                            h2 { color: #005b2e; border-left: 5px solid #d4af37; padding-left: 10px; margin-top: 30px; font-size: 20px; }
+                            .grid-datos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; }
+                            .dato-item { background: #f7faf7; padding: 12px 18px; border-radius: 8px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; }
+                            .dato-item span { color: #666; font-weight: 500; }
+                            .dato-item strong { color: #1a1a1a; }
+                            table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.9em; }
+                            th { background: #005b2e; color: white; padding: 12px; text-align: left; }
+                            td { padding: 10px 12px; border-bottom: 1px solid #e2e8f0; }
+                            tr:nth-child(even) td { background: #f9fbf9; }
+                            .badge-ok { color: #0e9f4b; font-weight: bold; }
+                            .badge-err { color: #e53e3e; font-weight: bold; }
+                            .footer-firma { margin-top: 60px; padding-top: 20px; border-top: 1px dashed #ccc; text-align: center; font-size: 0.85em; color: #777; }
+                            @media print { button { display: none; } }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="header-reporte">
+                            <div>
+                                <h1>SGATRU — Reporte Individual de Activo</h1>
+                                <p style="margin: 5px 0 0 0; color: #666;">Auditoría e infraestructura de red universitaria</p>
+                            </div>
+                            <div class="meta-reporte">
+                                <strong>Fecha:</strong> ${fechaReporte}<br>
+                                <strong>Hora:</strong> ${horaReporte}<br>
+                                <strong>Auditor:</strong> ${usuarioSesion}
+                            </div>
+                        </div>
+
+                        <h2>Información de Red y Conectividad</h2>
+                        <div class="grid-datos">
+                            <div class="dato-item"><span>Hostname:</span> <strong>${activoActual.hostname}</strong></div>
+                            <div class="dato-item"><span>Dirección IP:</span> <strong>${ipReal}</strong></div>
+                            <div class="dato-item"><span>Dirección MAC:</span> <strong><code>${activoActual.mac_address}</code></strong></div>
+                            <div class="dato-item"><span>Estado en Red:</span> <strong class="${claseEstado}">${estadoActual}</strong></div>
+                            <div class="dato-item"><span>Switch de Gestión:</span> <strong>${conexion ? (switches.find(s => Number(s.id_switch) === Number(conexion.id_switch))?.nombre_del_equipo || 'Switch General') : 'Desconectado'}</strong></div>
+                            <div class="dato-item"><span>Puerto Físico:</span> <strong>${conexion ? conexion.puerto_etiqueta : 'Ninguno'}</strong></div>
+                        </div>
+
+                        <h2>Ubicación Física e Institucional</h2>
+                        <div class="grid-datos">
+                            <div class="dato-item"><span>Campus:</span> <strong>CU Tianguistenco</strong></div>
+                            <div class="dato-item"><span>Edificio:</span> <strong>${nombreEdificio}</strong></div>
+                            <div class="dato-item"><span>Piso / Nivel:</span> <strong>${numeroPiso !== '-' ? 'Piso ' + numeroPiso : '-'}</strong></div>
+                            <div class="dato-item"><span>Aula / Laboratorio:</span> <strong>${nombreAula}</strong></div>
+                        </div>
+
+                        <h2>Responsable Asignado</h2>
+                        <div class="grid-datos">
+                            <div class="dato-item"><span>Nombre Completo:</span> <strong>${responsable ? responsable.nombre_completo : 'No asignado'}</strong></div>
+                            <div class="dato-item"><span>Correo Electrónico:</span> <strong>${responsable ? (responsable.correo || 'Sin registrar') : '-'}</strong></div>
+                            <div class="dato-item"><span>Teléfono de Contacto:</span> <strong>${responsable ? (responsable.telefono || 'Sin registrar') : '-'}</strong></div>
+                            <div class="dato-item"><span>Cargo / Rol:</span> <strong>${responsable ? (responsable.cargo || 'Personal Escolar') : '-'}</strong></div>
+                        </div>
+
+                        <h2>Historial de Alertas e Incidencias</h2>
+                        ${tablaAlertasHTML}
+
+                        <div class="footer-firma">
+                            <p>Documento generado analíticamente por el Sistema de Gestión de Activos y Topología de Red Universitaria (SGATRU).</p>
+                            <p style="margin-top: 5px;">© ${new Date().getFullYear()} Universidad Autónoma del Estado de México</p>
+                        </div>
+
+                        <script>
+                            window.onload = () => { 
+                                window.print(); 
+                                setTimeout(() => { window.close(); }, 500);
+                            }
+                        <\/script>
+                    </body>
+                    </html>
+                `);
+                ventanaImpresion.document.close();
+            });
+        }
+
     } catch (error) {
         console.error("Error al poblar la auditoría limpia del dispositivo:", error);
     }

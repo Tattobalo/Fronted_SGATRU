@@ -51,7 +51,7 @@ export async function inicializarMapaNivel() {
         if (nivelActual) {
             const edificioDelNivel = edificios.find(e => e.id_edificio == nivelActual.id_edificio);
             const nombreEdificio = edificioDelNivel ? edificioDelNivel.nombre : "Edificio Desconocido";
-            
+
             document.getElementById("texto-encabezado-piso").textContent = `${nombreEdificio} - Piso ${nivelActual.numero_nivel}`;
         }
 
@@ -83,8 +83,9 @@ export async function inicializarMapaNivel() {
             // 4. LÓGICA DE COLOR Y ALERTAS POR AULA
             const idsActivosSalon = activosEnSalonFiltro.map(a => Number(a.id_activo));
             const alertasSalon = alertas.filter(al => al.resuelta === false && idsActivosSalon.includes(Number(al.id_activo)));
-            
-            totalAlertasPiso += alertasSalon.length;
+
+            const equiposCaidosEnSalon = new Set(alertasSalon.map(al => al.id_activo)).size;
+            totalAlertasPiso += equiposCaidosEnSalon;
 
             let textoEstado = "● Operativo";
             let colorPunto = "color: #00a650;"; // Verde por defecto
@@ -122,7 +123,11 @@ export async function inicializarMapaNivel() {
         document.getElementById("stat-piso-aulas").textContent = espaciosDelNivel.length;
         document.getElementById("stat-piso-activos").textContent = totalActivosPiso;
         document.getElementById("stat-piso-switches").textContent = totalSwitchesPiso;
-        document.getElementById("stat-piso-alertas").textContent = totalAlertasPiso;
+        const tarjetaAlertasPiso = document.getElementById("stat-piso-alertas");
+        if (tarjetaAlertasPiso) {
+            tarjetaAlertasPiso.textContent = totalAlertasPiso;
+            tarjetaAlertasPiso.className = totalAlertasPiso > 0 ? "gold" : "green";
+        }
 
     } catch (error) {
         console.error("Error al procesar el layout:", error);

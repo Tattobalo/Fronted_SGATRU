@@ -32,8 +32,8 @@ export async function inicializarDashboard() {
         ]);
 
         const alertasActivas = alertas.filter(al => al.resuelta === false);
-        const totalOffline = alertasActivas.length;
-
+        const idsEquiposCaidos = new Set(alertasActivas.map(al => al.id_activo));
+        const totalOffline = idsEquiposCaidos.size;
         const totalSwitches = switches.length;
         const totalOnline = Math.max(0, activos.length - totalOffline);
 

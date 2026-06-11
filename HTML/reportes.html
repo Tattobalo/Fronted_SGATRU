@@ -6,39 +6,35 @@
 </header>
 
 <section class="report-summary">
-
   <div class="summary-card">
     <h3>Reportes generados</h3>
-    <p>34</p>
+    <p id="total-reportes-generados">0</p>
   </div>
 
   <div class="summary-card">
     <h3>Activos auditados</h3>
-    <p class="green">153</p>
+    <p id="total-activos-auditados" class="green">0</p>
   </div>
 
   <div class="summary-card">
     <h3>Alertas incluidas</h3>
-    <p class="gold">25</p>
+    <p id="total-alertas-incluidas" class="gold">0</p>
   </div>
 
   <div class="summary-card">
     <h3>Último reporte</h3>
-    <p class="small-text">02/06/2026</p>
+    <p id="ultimo-reporte-fecha" class="small-text">--/--/----</p>
   </div>
-
 </section>
 
 <section class="reports-grid">
-
   <div class="report-card">
     <div class="icon">📋</div>
     <h2>Reporte de Inventario</h2>
     <p>Listado general de activos registrados con IP, MAC, ubicación y responsable.</p>
-
     <div class="report-actions">
-      <button>Generar PDF</button>
-      <button class="secondary">Exportar Excel</button>
+      <button id="btn-inv-pdf">Generar PDF</button>
+      <button id="btn-inv-excel" class="secondary">Exportar Excel</button>
     </div>
   </div>
 
@@ -46,10 +42,9 @@
     <div class="icon">🚨</div>
     <h2>Reporte de Alertas</h2>
     <p>Historial de fallas, equipos desconectados, IP duplicadas e intermitencias.</p>
-
     <div class="report-actions">
-      <button>Generar PDF</button>
-      <button class="secondary">Exportar Excel</button>
+      <button id="btn-ale-pdf">Generar PDF</button>
+      <button id="btn-ale-excel" class="secondary">Exportar Excel</button>
     </div>
   </div>
 
@@ -57,10 +52,9 @@
     <div class="icon">🌐</div>
     <h2>Reporte de Topología</h2>
     <p>Relación entre switches, puertos físicos y equipos conectados.</p>
-
     <div class="report-actions">
-      <button>Generar PDF</button>
-      <button class="secondary">Ver mapa</button>
+      <button id="btn-top-pdf">Generar PDF</button>
+      <button id="btn-top-mapa" class="secondary">Ver mapa</button>
     </div>
   </div>
 
@@ -68,72 +62,56 @@
     <div class="icon">🏢</div>
     <h2>Reporte por Edificio</h2>
     <p>Resumen de activos y estado de conectividad por edificio, piso y aula.</p>
-
     <div class="report-actions">
-      <button>Generar PDF</button>
-      <button class="secondary">Exportar Excel</button>
+      <button id="btn-edi-pdf">Generar PDF</button>
+      <button id="btn-edi-excel" class="secondary">Exportar Excel</button>
     </div>
   </div>
-
 </section>
 
 <section class="custom-report">
-
   <h2>Generar Reporte Personalizado</h2>
-
-  <form>
-
+  <form id="form-reporte-personalizado">
     <div class="form-group">
       <label>Tipo de reporte</label>
-      <select>
-        <option>Inventario de activos</option>
-        <option>Alertas activas</option>
-        <option>Historial de conexión</option>
-        <option>Topología de red</option>
-        <option>Reporte por edificio</option>
+      <select id="tipo-reporte-custom">
+        <option value="inventario">Inventario de activos</option>
+        <option value="alertas">Alertas activas</option>
+        <option value="topologia">Topología de red</option>
+        <option value="edificio">Reporte por edificio</option>
       </select>
     </div>
 
     <div class="form-group">
       <label>Edificio</label>
-      <select>
-        <option>Todos</option>
-        <option>Edificio A</option>
-        <option>Edificio B</option>
-        <option>Biblioteca</option>
-        <option>Laboratorio</option>
+      <select id="filtro-edificio-reporte">
+        <option value="">Todos</option>
       </select>
     </div>
 
     <div class="form-group">
       <label>Estado</label>
-      <select>
-        <option>Todos</option>
-        <option>Online</option>
-        <option>Offline</option>
-        <option>Intermitente</option>
+      <select id="filtro-estado-reporte">
+        <option value="">Todos</option>
+        <option value="Online">Online</option>
+        <option value="Offline">Offline</option>
       </select>
     </div>
 
     <div class="form-group">
       <label>Formato</label>
-      <select>
-        <option>PDF</option>
-        <option>Excel</option>
+      <select id="formato-reporte">
+        <option value="PDF">PDF</option>
+        <option value="Excel">Excel</option>
       </select>
     </div>
-
     <button type="submit" class="generate-btn">Generar reporte</button>
-
   </form>
-
 </section>
 
 <section class="history-section">
-
   <h2>Historial de Reportes</h2>
-
-  <table>
+  <table id="tabla-historial-reportes">
     <thead>
       <tr>
         <th>Reporte</th>
@@ -141,38 +119,15 @@
         <th>Fecha</th>
         <th>Generado por</th>
         <th>Formato</th>
-        <th>Acción</th>
+        <th>Estado</th>
       </tr>
     </thead>
-
     <tbody>
       <tr>
-        <td>Inventario general</td>
-        <td>Inventario</td>
-        <td>02/06/2026</td>
-        <td>Administrador</td>
-        <td>PDF</td>
-        <td><a href="#">Descargar</a></td>
-      </tr>
-
-      <tr>
-        <td>Alertas críticas</td>
-        <td>Alertas</td>
-        <td>01/06/2026</td>
-        <td>Administrador</td>
-        <td>Excel</td>
-        <td><a href="#">Descargar</a></td>
-      </tr>
-
-      <tr>
-        <td>Topología Edificio A</td>
-        <td>Topología</td>
-        <td>28/05/2026</td>
-        <td>Redes TI</td>
-        <td>PDF</td>
-        <td><a href="#">Descargar</a></td>
+        <td colspan="6" style="text-align:center; color:#718096; font-style:italic; padding:20px;">
+          Cargando historial de sesión...
+        </td>
       </tr>
     </tbody>
   </table>
-
 </section>

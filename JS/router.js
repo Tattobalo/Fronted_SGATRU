@@ -9,6 +9,7 @@ import { cargarAlertas } from './alertas.js';
 import { cargarUsuarios } from './usuarios.js';
 import { inicializarNuevoUsuario } from './nuevoUsuario.js';
 import { inicializarNuevoActivo } from './nuevoActivo.js';
+import { cargarReportes } from './reportes.js';
 
 // Mapeo estricto de las rutas virtuales a tus archivos HTML físicos
 const mapasDeVistas = {
@@ -22,6 +23,7 @@ const mapasDeVistas = {
   '/alertas': 'HTML/alertas.html',
   '/usuarios': 'HTML/usuarios.html',
   '/nuevoUsuario': 'HTML/nuevoUsuario.html',
+  '/reportes': 'HTML/reportes.html',
   '/nuevoActivo': 'HTML/nuevoActivo.html'
 };
 
@@ -36,6 +38,7 @@ const controladores = {
   '/nuevoActivo': inicializarNuevoActivo,
   '/alertas': cargarAlertas,
   '/usuarios': cargarUsuarios,
+  '/reportes': cargarReportes,
   '/nuevoUsuario': inicializarNuevoUsuario
 };
 

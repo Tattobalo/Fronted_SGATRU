@@ -35,7 +35,7 @@ async function ejecutarLogin(event) {
             localStorage.setItem("sgatru_session", JSON.stringify({
                 username: usuarioInput,
                 rol: respuesta.rol || "Usuario",
-                token: respuesta.access_token
+                access_token: respuesta.access_token
             }));
             
             // Redirigimos al SPA

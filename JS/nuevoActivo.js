@@ -93,24 +93,64 @@ async function guardarActivo(e) {
     e.preventDefault();
 
     const tipoActivo = document.getElementById("tipo_activo").value;
-    const datosActivo = {
-        tipo: tipoActivo,
-        hostname: document.getElementById("hostname").value,
-        id_espacio: document.getElementById("id_espacio").value,
-        id_responsable: document.getElementById("id_responsable").value || null,
-        ip_estatica: document.getElementById("ip_estatica").value || null,
-        mac_address: document.getElementById("mac_address").value || null,
-        puerto_etiqueta: document.getElementById("puerto_etiqueta").value || null,
-        id_switch: document.getElementById("id_switch").value || null
-    };
+    
+    // Parseamos a enteros para cumplir con los validadores de SQLAlchemy/Pydantic
+    const idEspacio = parseInt(document.getElementById("id_espacio").value);
+    const idResponsableSelect = document.getElementById("id_responsable").value;
 
     try {
-        await post('/assets/activos/', datosActivo);
-        alert("¡Activo guardado exitosamente!");
+        if (tipoActivo === "Switch") {
+            // =========================================================
+            // 1. RUTA PARA SWITCHES
+            // =========================================================
+            const datosSwitch = {
+                id_espacio: idEspacio,
+                ip_gestion: document.getElementById("ip_gestion").value || null,
+                nombre_del_equipo: document.getElementById("hostname").value
+            };
+            
+            // Enviamos al endpoint de red, no al de inventario
+            await post('/network/switches/', datosSwitch);
+
+        } else {
+            // =========================================================
+            // 2. RUTA PARA COMPUTADORAS Y SERVIDORES
+            // =========================================================
+            const datosActivo = {
+                id_espacio: idEspacio,
+                id_responsable: idResponsableSelect ? parseInt(idResponsableSelect) : 1, // Enviamos 1 o manejamos error
+                hostname: document.getElementById("hostname").value || null,
+                ip_estatica: document.getElementById("ip_estatica").value || null,
+                mac_address: document.getElementById("mac_address").value
+            };
+            
+            // Guardamos el equipo y capturamos la respuesta del backend para obtener el nuevo ID
+            const activoGuardado = await post('/assets/activos/', datosActivo);
+
+            // =========================================================
+            // 3. REGISTRAR CONEXIÓN (Si llenaron switch y puerto)
+            // =========================================================
+            const idSwitchSelect = document.getElementById("id_switch").value;
+            const puerto = document.getElementById("puerto_etiqueta").value;
+
+            // Si el usuario indicó a qué switch va conectado, creamos el enlace en la BD
+            if (idSwitchSelect && puerto) {
+                const datosConexion = {
+                    id_switch: parseInt(idSwitchSelect),
+                    id_activo: activoGuardado.id_activo, // Usamos el ID autogenerado
+                    puerto_etiqueta: puerto
+                };
+                await post('/network/conexion_puerto/', datosConexion);
+            }
+        }
+
+        alert("¡Registro guardado exitosamente!");
         
         // Regresar al inventario SPA de forma reactiva
         navegarA('/inventario');
+
     } catch (error) {
-        alert("Error al guardar activo: " + error.message);
+        alert("Error al guardar: " + error.message);
+        console.error("Detalles del error:", error);
     }
 }

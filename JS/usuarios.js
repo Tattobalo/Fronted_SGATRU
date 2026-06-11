@@ -91,42 +91,28 @@ function ejecutarFiltrado() {
     renderizarTabla(usuariosFiltrados);
 }
 
-async function eliminarUsuario(idUsuario) {
-    // 1. Obtenemos el token real que debiste guardar en el localStorage durante el Login
-    const token = localStorage.getItem('token'); 
+async function eliminarUsuario(event) {
+    // 1. Capturamos el ID correctamente desde el botón presionado
+    const idUsuario = event.target.getAttribute("data-id");
     
-    if (!token) {
-        alert("No tienes permisos suficientes. Por favor, verificalo con un administrador.");
+    if (!idUsuario) return;
+
+    // 2. Confirmación de seguridad
+    if (!confirm("¿Estás seguro de eliminar a este usuario? Esta acción no se puede deshacer.")) {
         return;
     }
 
     try {
-        const respuesta = await fetch(`http://127.0.0.1:8000/assets/responsables/${idUsuario}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${token}`, 
-                'Content-Type': 'application/json'
-            }
-            
-        });
-
-        if (respuesta.status === 204) { 
-            console.log("Usuario eliminado exitosamente");
-            cargarUsuarios(); 
-        } 
-        else if (respuesta.status === 403) {
-            alert("Acceso denegado: Solo los Administradores de Red pueden eliminar cuentas.");
-        } 
-        else if (respuesta.status === 401) {
-            alert("Tu sesión es inválida o ha expirado. Vuelve a iniciar sesión.");
-        } 
-        else {
-            const errorData = await respuesta.json();
-            alert(`Error del servidor: ${errorData.detail}`);
-        }
-
+        // 3. Usamos tu función 'del' de api.js que ya sabe manejar el token y el Authorization
+        await del(`/assets/responsables/${idUsuario}`);
+        
+        alert("Usuario eliminado exitosamente");
+        cargarUsuarios(); // Recargamos la tabla
+        
     } catch (error) {
-        console.error("Error en la petición:", error);
+        // Aquí capturamos el mensaje de error que configuramos en el backend (el 400 IntegrityError)
+        console.error("Error al eliminar:", error);
+        alert(error.message || "Error al eliminar el usuario. Verifica que no tenga equipos asignados.");
     }
 }
 

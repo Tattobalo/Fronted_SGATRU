@@ -114,3 +114,21 @@ export async function put(endpoint, data) {
 
     return await response.json();
 }
+
+export async function patch(endpoint, data = {}) {
+    const rutaLimpia = endpoint.startsWith('/') ? endpoint.slice(1) : endpoint;
+    const urlDestino = `${API_URL.replace(/\/$/, "")}/${rutaLimpia}`;
+
+    const response = await fetch(urlDestino, {
+        method: 'PATCH',
+        headers: construirCabeceras(true), 
+        body: JSON.stringify(data)
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.detail || "Error en la petición PATCH");
+    }
+
+    return await response.json();
+}

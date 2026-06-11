@@ -5,7 +5,7 @@
     }
 })();
 
-import { get,post } from './api.js';
+import { get,post,patch } from './api.js';
 import { navegarA } from './router.js';
 
 let listaAlertasGlobal = [];
@@ -75,19 +75,28 @@ function vincularEventos() {
     // 1. LÓGICA DEL BOTÓN ESCANEO
     const btnEscaneo = document.getElementById("btn-ejecutar-escaneo");
     if (btnEscaneo) {
-        btnEscaneo.addEventListener("click", async () => {
-            btnEscaneo.textContent = "Escaneando...";
-            btnEscaneo.disabled = true;
+        // Clonar botón para evitar listeners dobles en SPA
+        const nuevoBtn = btnEscaneo.cloneNode(true);
+        btnEscaneo.replaceWith(nuevoBtn);
+
+        nuevoBtn.addEventListener("click", async () => {
+            nuevoBtn.textContent = "Escaneando...";
+            nuevoBtn.disabled = true;
             try {
+                // Invocamos el endpoint protegido (requiere que hayas arreglado tu router en backend)
                 await post('/monitoring/escanear-ahora', {});
-                alert("Escaneo iniciado. Los datos se actualizarán en breve.");
-                setTimeout(cargarAlertas, 2000);
+                
+                // Le damos a Python 4.5 segundos para terminar el escaneo antes de pedir los datos de nuevo
+                setTimeout(async () => {
+                    await cargarAlertas(); 
+                    alert("Escaneo finalizado. Tarjetas actualizadas.");
+                }, 4500); 
+
             } catch (err) {
-                console.error("DETALLE DEL ERROR:", err); // <--- MIRA ESTO EN LA CONSOLA
+                console.error("DETALLE DEL ERROR:", err); 
                 alert("Error técnico: " + err.message);
-            } finally {
-                btnEscaneo.textContent = "Ejecutar escaneo";
-                btnEscaneo.disabled = false;
+                nuevoBtn.textContent = "Ejecutar escaneo";
+                nuevoBtn.disabled = false;
             }
         });
     }
@@ -178,9 +187,25 @@ function renderizarTarjetasAlertas(alertasLista) {
         
         const btnResolver = card.querySelector('.btn-resolver');
         if (btnResolver) {
-            btnResolver.addEventListener("click", () => {
-                alert(`Lógica para resolver la alerta #${alerta.id_alerta} en desarrollo.`);
-                // Aquí podrías hacer un PUT a FastAPI para cambiar resuelta a true
+            btnResolver.addEventListener("click", async () => {
+                const confirmar = confirm(`¿Estás seguro de que deseas forzar la resolución de la alerta #${alerta.id_alerta}?`);
+                if (!confirmar) return;
+
+                btnResolver.textContent = "Resolviendo...";
+                btnResolver.disabled = true;
+
+                try {
+                    // Llamamos al endpoint PATCH del router de monitoreo
+                    await patch(`/monitoring/alertas/${alerta.id_alerta}/resolver`);
+                    
+                    // Recargamos las alertas inmediatamente
+                    await cargarAlertas(); 
+                    
+                } catch (error) {
+                    alert("Error al intentar resolver la alerta: " + error.message);
+                    btnResolver.textContent = "Marcar en revisión";
+                    btnResolver.disabled = false;
+                }
             });
         }
 
