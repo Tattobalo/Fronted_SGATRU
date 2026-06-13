@@ -1,0 +1,146 @@
+<section class="form-page">
+
+    <div class="form-header">
+
+        <div>
+            <h1>Registrar Campus</h1>
+            <p>Alta de unidades académicas y campus universitarios</p>
+            <link rel="stylesheet" href="compartido.css">
+        </div>
+
+        <button class="btn-volver" onclick="navegar('/campus')">
+            ← Volver
+        </button>
+
+    </div>
+
+    <form class="form-card">
+
+        <h2>Información General</h2>
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Nombre del Campus</label>
+                <input type="text"
+                       placeholder="Ej. Centro Universitario Tianguistenco"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label>Clave del Campus</label>
+                <input type="text"
+                       placeholder="Ej. CUT"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label>Municipio</label>
+                <input type="text"
+                       placeholder="Ej. Tianguistenco"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label>Estado</label>
+                <input type="text"
+                       placeholder="Ej. Estado de México"
+                       required>
+            </div>
+
+        </div>
+
+        <h2>Información de Contacto</h2>
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Dirección</label>
+                <input type="text"
+                       placeholder="Dirección completa">
+            </div>
+
+            <div class="form-group">
+                <label>Teléfono</label>
+                <input type="text"
+                       placeholder="722 000 0000">
+            </div>
+
+            <div class="form-group">
+                <label>Correo Institucional</label>
+                <input type="email"
+                       placeholder="campus@uaemex.mx">
+            </div>
+
+            <div class="form-group">
+                <label>Responsable</label>
+                <input type="text"
+                       placeholder="Director o administrador">
+            </div>
+
+        </div>
+
+        <h2>Infraestructura</h2>
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Número de edificios</label>
+                <input type="number"
+                       placeholder="Ej. 5">
+            </div>
+
+            <div class="form-group">
+                <label>Total de espacios académicos</label>
+                <input type="number"
+                       placeholder="Ej. 40">
+            </div>
+
+            <div class="form-group">
+                <label>Estado del campus</label>
+                <select>
+                    <option>Operativo</option>
+                    <option>Con incidencias</option>
+                    <option>En mantenimiento</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Tipo</label>
+                <select>
+                    <option>Centro Universitario</option>
+                    <option>Facultad</option>
+                    <option>Unidad Académica</option>
+                    <option>Escuela Preparatoria</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="form-group full">
+
+            <label>Descripción</label>
+
+            <textarea placeholder="Información general del campus">
+            </textarea>
+
+        </div>
+
+        <div class="form-actions">
+
+            <button type="button"
+                    class="btn-cancelar"
+                    onclick="navegar('/campus')">
+                Cancelar
+            </button>
+
+            <button type="submit"
+                    class="btn-guardar">
+                Guardar Campus
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
